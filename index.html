@@ -37,6 +37,10 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6.5a5 5 0 0 0-6.7 6.7L3.5 17a2.1 2.1 0 0 0 3 3l3.8-3.8A5 5 0 0 0 17 9.5l-3 3-3.5-3.5 3.5-2.5Z"/></svg>
             Strumenti utili
           </a>
+          <a class="nav-link" href="#diario">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1ZM14 3.5v5h5M9 13h6M9 16.5h6"/></svg>
+            Diario lavori
+          </a>
           <a class="nav-link" href="#articoli">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3v12H8a3 3 0 0 1-3-3v-12ZM5 16.5a3 3 0 0 1 3-3h10M9 8h5M9 10.5h5"/></svg>
             Articoli
@@ -49,8 +53,8 @@
               <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3M12 14v3"/></svg>
             </span>
             <div>
-              <strong>I tuoi dati restano tuoi</strong>
-              <p>Questa demo non invia dati a un server.</p>
+              <strong>Dati salvati nel browser</strong>
+              <p>Non sono inviati a un server. Chi usa lo stesso profilo potrebbe vederli.</p>
             </div>
           </div>
           <div class="profile">
@@ -68,7 +72,7 @@
           <div class="breadcrumb"><span>Il mio spazio</span><span class="crumb-slash">/</span><strong>Panoramica</strong></div>
           <div class="topbar-actions">
             <span class="demo-badge"><span></span> PROGETTO DEMO</span>
-            <button class="help-button" type="button" id="help-button" aria-label="Apri le indicazioni di sicurezza">
+            <button class="help-button" type="button" id="help-button" aria-label="Serve una mano?">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.3 1.7c-1 .9-1.9 1.2-1.9 2.8M12 17.2h.01"/></svg>
               <span>Serve una mano?</span>
             </button>
@@ -178,6 +182,53 @@
             </div>
           </section>
 
+          <section class="diary-section" id="diario">
+            <div class="section-heading">
+              <div>
+                <div class="section-kicker">APPUNTI PRIVATI · SALVATI NEL BROWSER</div>
+                <h2>Diario dei lavori</h2>
+                <p>Registra decisioni, aggiornamenti e problemi con data e un riepilogo verificabile.</p>
+              </div>
+              <div class="diary-actions">
+                <button type="button" class="diary-secondary-button" id="export-diary">Esporta diario</button>
+                <button type="button" class="diary-secondary-button diary-clear-button" id="clear-diary">Svuota diario</button>
+              </div>
+            </div>
+            <div class="diary-card">
+              <form class="diary-form" id="diary-form">
+                <label class="diary-field">
+                  <span>Tipo di nota</span>
+                  <select id="diary-category" name="category" required>
+                    <option value="decisione">Decisione</option>
+                    <option value="aggiornamento">Aggiornamento</option>
+                    <option value="problema">Problema o richiesta</option>
+                    <option value="pagamento">Pagamento o spesa</option>
+                    <option value="incontro">Incontro o telefonata</option>
+                  </select>
+                </label>
+                <label class="diary-field">
+                  <span>Data</span>
+                  <input id="diary-date" name="date" type="date" required>
+                </label>
+                <label class="diary-field diary-title-field">
+                  <span>Titolo breve</span>
+                  <input id="diary-title" name="title" type="text" maxlength="100" placeholder="Es. Scelta delle piastrelle bagno" required>
+                </label>
+                <label class="diary-field diary-description-field">
+                  <span>Che cosa è successo o cosa è stato concordato?</span>
+                  <textarea id="diary-description" name="description" rows="3" maxlength="2000" placeholder="Annota i fatti, le persone coinvolte e i prossimi passaggi. Evita dati sensibili non necessari." required></textarea>
+                </label>
+                <div class="diary-form-footer">
+                  <p>Non allegare qui documenti o dati riservati. Conserva foto, messaggi e originali nel tuo archivio personale.</p>
+                  <button class="button button-primary diary-submit" type="submit">Aggiungi nota <span aria-hidden="true">+</span></button>
+                </div>
+              </form>
+              <div class="diary-list-header"><h3>Le tue note</h3><span id="diary-count">0 note</span></div>
+              <p class="diary-status" id="diary-status" role="status" aria-live="polite"></p>
+              <div class="diary-entries" id="diary-entries" aria-live="polite"></div>
+            </div>
+          </section>
+
           <section class="articles-section" id="articoli">
             <div class="section-heading">
               <div>
@@ -274,6 +325,36 @@
             </div>
           </section>
 
+          <section class="sources-section" id="fonti" aria-labelledby="fonti-heading">
+            <div class="section-heading">
+              <div>
+                <div class="section-kicker">FONTI E VERIFICA</div>
+                <h2 id="fonti-heading">Documenti utili da verificare prima di ogni decisione</h2>
+                <p>Le indicazioni di questo percorso aiutano a organizzare il lavoro, ma non sostituiscono la verifica con il tecnico, l’impresa o gli enti competenti.</p>
+              </div>
+            </div>
+            <div class="source-grid">
+              <article class="source-card">
+                <span class="source-tag">COMUNE</span>
+                <h3>Pratiche e adempimenti locali</h3>
+                <p>Controlla sempre il sito del tuo Comune per normativa, permessi, comunicazioni e scadenze del singolo intervento.</p>
+                <a href="https://www.italia.it/it" target="_blank" rel="noreferrer">Consulta il portale Italia.it</a>
+              </article>
+              <article class="source-card">
+                <span class="source-tag">ANCE</span>
+                <h3>Riferimenti professionali</h3>
+                <p>Le associazioni di categoria aiutano a orientarsi su standard, competenze e pratiche di riferimento per gli interventi edilizi.</p>
+                <a href="https://www.ance.it" target="_blank" rel="noreferrer">Apri ANCE</a>
+              </article>
+              <article class="source-card">
+                <span class="source-tag">CONSUMATORI</span>
+                <h3>Informazioni utili all’acquisto</h3>
+                <p>Per contratti, offerte e clausole è utile verificare anche le informazioni su diritti, garanzie e condizioni di acquisto.</p>
+                <a href="https://www.consumatori.it" target="_blank" rel="noreferrer">Vedi Consumatore.it</a>
+              </article>
+            </div>
+          </section>
+
           <footer class="footer-note">
             <span class="footer-mark" aria-hidden="true">i</span>
             <p><strong>Una guida per orientarti, non un parere professionale.</strong> Le regole e le pratiche dipendono dal tipo di intervento e dal caso concreto. Per aspetti tecnici, fiscali o legali, verifica con un professionista qualificato o con gli enti competenti.</p>
@@ -283,7 +364,7 @@
       </main>
     </div>
 
-    <dialog class="help-dialog" id="help-dialog" aria-labelledby="dialog-title">
+    <dialog class="help-dialog" id="sicurezza" aria-labelledby="dialog-title">
       <div class="dialog-top">
         <span class="dialog-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M12 3.5 21 20H3l9-16.5Z"/><path d="M12 9v4.5M12 17h.01"/></svg>

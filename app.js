@@ -92,12 +92,21 @@ const phases = [
 ];
 
 const storageKey = "cantiere-chiaro-demo-v1";
+const diaryStorageKey = "cantiere-chiaro-diario-v1";
+const diaryCategories = {
+  decisione: "Decisione",
+  aggiornamento: "Aggiornamento",
+  problema: "Problema o richiesta",
+  pagamento: "Pagamento o spesa",
+  incontro: "Incontro o telefonata"
+};
 const phaseList = document.querySelector("#phase-list");
 const phaseDetail = document.querySelector("#phase-detail");
-const dialog = document.querySelector("#help-dialog");
+const dialog = document.querySelector("#sicurezza");
 const backdrop = document.querySelector("#dialog-backdrop");
 let activePhase = 0;
 let completed = loadProgress();
+let diaryEntries = loadDiary();
 
 function loadProgress() {
   try {
@@ -114,6 +123,91 @@ function saveProgress() {
     localStorage.setItem(storageKey, JSON.stringify(completed));
   } catch (error) {
     console.warn("Impossibile salvare i progressi nel browser.", error);
+  }
+}
+
+function loadDiary() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(diaryStorageKey) || "[]");
+    if (!Array.isArray(saved)) throw new TypeError("Il diario salvato non ha il formato previsto.");
+    const validEntries = saved.filter(entry =>
+      entry &&
+      typeof entry.id === "string" &&
+      typeof entry.date === "string" &&
+      /^\d{4}-\d{2}-\d{2}$/.test(entry.date) &&
+      typeof entry.category === "string" &&
+      Object.hasOwn(diaryCategories, entry.category) &&
+      typeof entry.title === "string" &&
+      typeof entry.description === "string"
+    );
+    if (validEntries.length !== saved.length) {
+      console.warn("Alcune note del diario salvato non sono valide e non verranno mostrate.");
+    }
+    return validEntries;
+  } catch (error) {
+    console.warn("Impossibile leggere il diario salvato per questa demo.", error);
+    return [];
+  }
+}
+
+function saveDiary() {
+  try {
+    localStorage.setItem(diaryStorageKey, JSON.stringify(diaryEntries));
+    return true;
+  } catch (error) {
+    console.warn("Impossibile salvare il diario nel browser.", error);
+    setDiaryStatus("Salvataggio non riuscito: il browser potrebbe non avere spazio disponibile. Esporta o annota le modifiche prima di chiudere la pagina.", true);
+    return false;
+  }
+}
+
+function setDiaryStatus(message, isError = false) {
+  const status = document.querySelector("#diary-status");
+  status.textContent = message;
+  status.classList.toggle("error", isError);
+}
+
+function renderDiary() {
+  const container = document.querySelector("#diary-entries");
+  const count = document.querySelector("#diary-count");
+  const sortedEntries = [...diaryEntries].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  count.textContent = `${diaryEntries.length} ${diaryEntries.length === 1 ? "nota" : "note"}`;
+  container.replaceChildren();
+
+  if (sortedEntries.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "diary-empty";
+    empty.textContent = "Non hai ancora aggiunto note. Usa il modulo qui sopra per iniziare il tuo diario.";
+    container.append(empty);
+    return;
+  }
+
+  for (const entry of sortedEntries) {
+    const article = document.createElement("article");
+    article.className = "diary-entry";
+    const meta = document.createElement("div");
+    meta.className = "diary-entry-meta";
+    const category = document.createElement("span");
+    category.className = `diary-entry-category ${entry.category}`;
+    category.textContent = diaryCategories[entry.category];
+    const date = document.createElement("time");
+    date.dateTime = entry.date;
+    date.textContent = new Intl.DateTimeFormat("it-IT", { dateStyle: "long", timeZone: "UTC" })
+      .format(new Date(`${entry.date}T00:00:00Z`));
+    meta.append(category, date);
+
+    const title = document.createElement("h4");
+    title.textContent = entry.title;
+    const description = document.createElement("p");
+    description.textContent = entry.description;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "diary-remove";
+    remove.textContent = "Elimina";
+    remove.setAttribute("aria-label", `Elimina nota: ${entry.title}`);
+    remove.dataset.removeEntry = entry.id;
+    article.append(meta, title, description, remove);
+    container.append(article);
   }
 }
 
@@ -235,6 +329,98 @@ document.querySelector("#reset-button").addEventListener("click", () => {
   render();
 });
 
+function todayAsLocalDate() {
+  const now = new Date();
+  const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return localDate.toISOString().slice(0, 10);
+}
+
+document.querySelector("#diary-date").value = todayAsLocalDate();
+
+document.querySelector("#diary-form").addEventListener("submit", event => {
+  event.preventDefault();
+  if (diaryEntries.length >= 250) {
+    setDiaryStatus("Hai raggiunto il limite di 250 note per questa demo. Esporta il diario prima di rimuovere le note che non ti servono.", true);
+    return;
+  }
+
+  const form = event.currentTarget;
+  const formData = new FormData(form);
+  const entry = {
+    id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+    date: String(formData.get("date")),
+    category: String(formData.get("category")),
+    title: String(formData.get("title")).trim(),
+    description: String(formData.get("description")).trim()
+  };
+  if (!entry.date || !Object.hasOwn(diaryCategories, entry.category) || !entry.title || !entry.description) {
+    setDiaryStatus("Controlla i campi: data, tipo di nota, titolo e descrizione sono obbligatori.", true);
+    return;
+  }
+
+  diaryEntries.push(entry);
+  const saved = saveDiary();
+  renderDiary();
+  if (saved) {
+    form.reset();
+    document.querySelector("#diary-date").value = todayAsLocalDate();
+    document.querySelector("#diary-category").value = "decisione";
+    document.querySelector("#diary-title").focus();
+    setDiaryStatus("Nota aggiunta al diario del browser.");
+  }
+});
+
+document.querySelector("#diary-entries").addEventListener("click", event => {
+  const removeButton = event.target.closest("[data-remove-entry]");
+  if (!removeButton) return;
+  const previousEntries = diaryEntries;
+  diaryEntries = diaryEntries.filter(entry => entry.id !== removeButton.dataset.removeEntry);
+  if (!saveDiary()) {
+    diaryEntries = previousEntries;
+  } else {
+    setDiaryStatus("Nota eliminata.");
+  }
+  renderDiary();
+});
+
+document.querySelector("#export-diary").addEventListener("click", () => {
+  if (diaryEntries.length === 0) {
+    setDiaryStatus("Il diario è vuoto: aggiungi almeno una nota prima di esportarlo.", true);
+    return;
+  }
+  const data = {
+    exportedAt: new Date().toISOString(),
+    note: "Esportazione locale del diario Cantiere Chiaro.",
+    entries: [...diaryEntries].sort((a, b) => a.date.localeCompare(b.date))
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `diario-lavori-${todayAsLocalDate()}.json`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setDiaryStatus("Esportazione completata. Conserva il file in un luogo sicuro.");
+});
+
+document.querySelector("#clear-diary").addEventListener("click", () => {
+  if (diaryEntries.length === 0) {
+    setDiaryStatus("Il diario è già vuoto.");
+    return;
+  }
+  if (!window.confirm("Vuoi eliminare tutte le note del diario salvate in questo browser? Questa operazione non si può annullare.")) return;
+  const previousEntries = diaryEntries;
+  diaryEntries = [];
+  if (!saveDiary()) {
+    diaryEntries = previousEntries;
+  } else {
+    setDiaryStatus("Diario svuotato.");
+  }
+  renderDiary();
+});
+
 function openHelp() {
   if (typeof dialog.showModal === "function") dialog.showModal();
   else dialog.setAttribute("open", "");
@@ -272,3 +458,4 @@ dialog.addEventListener("click", event => {
 });
 
 render();
+renderDiary();

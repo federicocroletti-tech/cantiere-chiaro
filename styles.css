@@ -170,6 +170,44 @@ h1 span { color: var(--green); }
 .peach { color: #9a7958; background: #f7efe5; }
 .tool-card h3 { margin: 1px 0 5px; color: #475047; font-size: 9px; font-weight: 700; }
 .tool-card p { margin: 0; color: #8a9088; font-size: 8px; line-height: 1.55; }
+.diary-section { margin-top: 37px; scroll-margin-top: 20px; }
+.diary-actions { display: flex; flex: 0 0 auto; gap: 7px; }
+.diary-secondary-button { min-height: 32px; padding: 0 11px; border: 1px solid #dfe4da; border-radius: 6px; color: #55725a; background: #fffefa; cursor: pointer; font-size: 9px; font-weight: 600; }
+.diary-secondary-button:hover { border-color: #b6c8b6; background: #f5f8f2; }
+.diary-clear-button { color: #8c6b5c; }
+.diary-clear-button:hover { border-color: #dec8bb; background: #fbf5f1; }
+.diary-card { overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: var(--card); box-shadow: var(--shadow); }
+.diary-form { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, .55fr) minmax(0, 1.3fr); gap: 12px; padding: 18px; border-bottom: 1px solid #eeede7; }
+.diary-field { display: grid; gap: 6px; color: #59645a; font-size: 9px; font-weight: 600; }
+.diary-field input, .diary-field select, .diary-field textarea { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid #e4e6de; border-radius: 6px; color: #3d473e; background: #fffefa; font: 10px "DM Sans", "Segoe UI", sans-serif; }
+.diary-field input, .diary-field select { min-height: 35px; }
+.diary-field textarea { min-height: 72px; resize: vertical; line-height: 1.55; }
+.diary-field input::placeholder, .diary-field textarea::placeholder { color: #a4a89e; }
+.diary-title-field { grid-column: 1 / 3; }
+.diary-description-field { grid-column: 3; grid-row: 1 / 3; }
+.diary-form-footer { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.diary-form-footer p { max-width: 500px; margin: 0; color: #92968d; font-size: 8px; line-height: 1.5; }
+.diary-submit { min-height: 34px; padding: 0 12px; font-size: 9px; }
+.diary-submit span { font-size: 15px; }
+.diary-list-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px 9px; }
+.diary-list-header h3 { margin: 0; color: #435045; font-family: Manrope, sans-serif; font-size: 12px; font-weight: 700; }
+.diary-list-header > span { color: #8c9289; font-size: 8px; }
+.diary-status { min-height: 0; margin: 0; padding: 0 18px; color: #527256; font-size: 9px; line-height: 1.5; }
+.diary-status:not(:empty) { padding-top: 3px; padding-bottom: 6px; }
+.diary-status.error { color: #a04c3f; }
+.diary-entries { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; padding: 0 18px 18px; }
+.diary-entry { position: relative; min-width: 0; padding: 12px; border: 1px solid #eeede7; border-radius: 7px; background: #fffefa; }
+.diary-entry-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.diary-entry-meta time { color: #95998f; font-size: 8px; }
+.diary-entry-category { padding: 4px 7px; border-radius: 20px; color: #62735e; background: #eef3e9; font-size: 7px; font-weight: 700; }
+.diary-entry-category.problema { color: #9a6554; background: #f8eee8; }
+.diary-entry-category.pagamento { color: #88744b; background: #f6f1e4; }
+.diary-entry-category.incontro { color: #6d708e; background: #f0eff7; }
+.diary-entry h4 { margin: 0 0 5px; color: #435047; font-size: 10px; font-weight: 700; }
+.diary-entry p { margin: 0; color: #7d857b; font-size: 9px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.diary-remove { margin-top: 9px; padding: 0; border: 0; color: #927266; background: transparent; cursor: pointer; font-size: 8px; text-decoration: underline; text-underline-offset: 2px; }
+.diary-remove:hover { color: #763c2e; }
+.diary-empty { grid-column: 1 / -1; margin: 0; padding: 3px 0 0; color: #8c9289; font-size: 9px; line-height: 1.6; }
 .articles-section { margin-top: 37px; scroll-margin-top: 20px; }
 .article-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
 .article-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 9px; background: var(--card); box-shadow: var(--shadow); }
@@ -186,6 +224,14 @@ h1 span { color: var(--green); }
 .article-body p { margin: 0 0 11px; }
 .article-body h4 { margin: 13px 0 7px; color: #46564a; font-size: 11px; }
 .article-body ul { display: grid; gap: 6px; margin: 0 0 12px; padding-left: 18px; }
+.sources-section { margin-top: 37px; }
+.source-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.source-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 9px; background: var(--card); box-shadow: var(--shadow); }
+.source-tag { display: inline-flex; align-items: center; padding: 4px 7px; border-radius: 20px; background: #edf3ef; color: #4d695d; font-size: 8px; letter-spacing: .9px; font-weight: 700; }
+.source-card h3 { margin: 12px 0 8px; color: #354139; font-family: Manrope, sans-serif; font-size: 15px; letter-spacing: -.25px; }
+.source-card p { margin: 0 0 12px; color: #6f7a72; font-size: 10px; line-height: 1.7; }
+.source-card a { display: inline-flex; align-items: center; color: var(--green); font-size: 9px; font-weight: 700; }
+.source-card a:hover { text-decoration: underline; text-underline-offset: 2px; }
 .footer-note { display: flex; align-items: center; gap: 10px; margin-top: 22px; padding: 12px 13px; border: 1px solid #e9e8e1; border-radius: 7px; background: #f0f0e9; }
 .footer-mark { width: 17px; height: 17px; display: grid; place-items: center; flex: 0 0 17px; border-radius: 50%; color: #fff; background: #989b7b; font-family: Georgia, serif; font-size: 11px; font-weight: 700; }
 .footer-note p { flex: 1; margin: 0; color: #7e8379; font-size: 8px; line-height: 1.55; }
@@ -193,22 +239,35 @@ h1 span { color: var(--green); }
 .footer-note > a { flex: 0 0 auto; color: #63745e; font-size: 8px; font-weight: 700; }
 .footer-note > a:hover { color: var(--green); }
 
-.help-dialog { position: fixed; z-index: 5; inset: 50% auto auto 50%; width: min(460px, calc(100% - 32px)); max-height: min(90vh, 690px); overflow: auto; padding: 25px; transform: translate(-50%, -50%); border: 1px solid #e9e8e1; border-radius: 12px; background: #fffefa; box-shadow: 0 22px 70px rgba(29, 42, 31, .2); }
+.help-dialog { position: fixed; z-index: 5; inset: 50% auto auto 50%; width: min(780px, calc(100% - 40px)); max-height: min(90vh, 780px); overflow: auto; padding: 18px 18px 16px; transform: translate(-50%, -50%); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: #1a1d22; color: #edf1f4; box-shadow: 0 24px 80px rgba(0, 0, 0, .5); }
 .help-dialog[open] { display: block; }
-.dialog-backdrop:not([hidden]) { position: fixed; z-index: 4; inset: 0; background: rgba(28, 38, 31, .38); backdrop-filter: blur(2px); }
-.dialog-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
-.dialog-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 9px; color: #97733e; background: #f7f0e0; }
-.dialog-icon svg { width: 19px; height: 19px; }
-.dialog-close { width: 28px; height: 28px; color: #8b8e86; font-size: 22px; }
-.help-dialog h2 { margin: 8px 0 7px; color: #2d392f; font-size: 20px; line-height: 1.35; letter-spacing: -.65px; }
-.dialog-intro { margin: 0; color: #7f877e; font-size: 10px; line-height: 1.65; }
-.help-list { display: grid; gap: 0; margin: 18px 0 15px; padding: 0; list-style: none; }
-.help-list li { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid #eeede7; }
-.help-list li > span { padding-top: 2px; color: #99a28f; font-family: Manrope, sans-serif; font-size: 9px; font-weight: 700; }
-.help-list strong { color: #4a574c; font-size: 10px; }
-.help-list p { margin: 5px 0 0; color: #81877f; font-size: 9px; line-height: 1.6; }
-.dialog-disclaimer { padding: 10px 11px; border-radius: 6px; color: #777b70; background: #f4f3ec; font-size: 8px; line-height: 1.5; }
+.dialog-backdrop:not([hidden]) { position: fixed; z-index: 4; inset: 0; background: rgba(16, 18, 21, .65); backdrop-filter: blur(2px); }
+.dialog-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+.dialog-icon { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 5px; color: #d5d9db; background: rgba(255,255,255,0.08); }
+.dialog-icon svg { width: 14px; height: 14px; }
+.dialog-close { width: 28px; height: 28px; color: #a7aeb4; font-size: 22px; }
+.dialog-crumb { margin: 14px 0 0; color: #c9d0d5; font-size: 10px; font-weight: 500; letter-spacing: .04em; }
+.dialog-panel { margin-top: 14px; padding: 16px 18px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.03); color: #eef1f4; font-size: 13px; line-height: 1.7; }
+.dialog-panel p { margin: 0; }
+.dialog-legal-section { margin-top: 18px; color: #edf1f4; }
+.help-dialog h2 { margin: 0 0 12px; color: #f0f4f6; font-size: 20px; line-height: 1.35; letter-spacing: -.65px; }
+.dialog-legal-section p { margin: 0 0 12px; color: #dfe5ea; font-size: 12px; line-height: 1.8; }
+.dialog-subheading { margin-top: 18px !important; color: #f0f4f6 !important; font-size: 13px !important; font-weight: 700; }
+.help-list { display: grid; gap: 8px; margin: 10px 0 14px; padding-left: 18px; list-style: disc; color: #dfe5ea; }
+.help-list li { margin: 0; color: #dfe5ea; font-size: 12px; line-height: 1.75; }
+.help-list span { color: #a8bac4; }
+.help-ordered { display: grid; gap: 8px; margin: 0 0 16px; padding-left: 20px; color: #dfe5ea; }
+.help-ordered li { margin: 0; font-size: 12px; line-height: 1.75; }
+.dialog-warning { margin: 8px 0 16px; padding: 12px 14px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #e4eaf0; font-size: 12px; line-height: 1.8; }
+.dialog-disclaimer { margin-top: 12px; padding: 12px 13px; border-radius: 6px; color: #c6ccd1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); font-size: 11px; line-height: 1.6; }
 .dialog-done { width: 100%; margin-top: 15px; }
+
+@media (max-width: 760px) {
+  .help-dialog { width: min(100% - 20px, 540px); padding: 14px 14px 12px; }
+  .dialog-panel { padding: 12px 13px; font-size: 11px; }
+  .dialog-legal-section p, .help-list li, .help-ordered li, .dialog-warning, .dialog-disclaimer { font-size: 11px; }
+  .help-dialog h2 { font-size: 18px; }
+}
 
 @media (min-width: 1500px) {
   .page-wrap { padding-top: 43px; }
@@ -228,6 +287,7 @@ h1 span { color: var(--green); }
   .phase-list { padding-right: 10px; padding-left: 10px; }
   .phase-button { padding-right: 5px; padding-left: 5px; }
   .phase-label { font-size: 7px; }
+  .source-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   .sidebar { width: 56px; padding: 19px 8px 12px; align-items: center; }
@@ -288,10 +348,26 @@ h1 span { color: var(--green); }
   .tool-card { min-height: 67px; }
   .tool-card h3 { font-size: 9px; }
   .tool-card p { font-size: 8px; }
+  .diary-section { margin-top: 27px; }
+  .diary-section > .section-heading { align-items: flex-start; }
+  .diary-actions { width: 100%; }
+  .diary-secondary-button { min-height: 31px; font-size: 8px; }
+  .diary-form { grid-template-columns: 1fr 1fr; gap: 10px; padding: 13px; }
+  .diary-title-field { grid-column: 1 / -1; }
+  .diary-description-field { grid-column: 1 / -1; grid-row: auto; }
+  .diary-form-footer { align-items: flex-start; flex-direction: column; }
+  .diary-submit { align-self: flex-end; }
+  .diary-list-header { padding-right: 13px; padding-left: 13px; }
+  .diary-status { padding-right: 13px; padding-left: 13px; }
+  .diary-entries { grid-template-columns: 1fr; padding: 0 13px 13px; }
+  .diary-entry { padding: 11px; }
+  .diary-entry-meta time { font-size: 7px; }
   .articles-section { margin-top: 28px; }
   .article-grid { grid-template-columns: 1fr; gap: 9px; }
   .article-card { padding: 15px; }
   .article-card h3 { font-size: 13px; }
+  .source-grid { grid-template-columns: 1fr; gap: 9px; }
+  .source-card { padding: 15px; }
   .footer-note { align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
   .footer-note p { flex-basis: calc(100% - 27px); }
   .footer-note > a { margin-left: 25px; }
