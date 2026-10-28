@@ -272,6 +272,7 @@ function renderProgress() {
     ? "Hai spuntato tutte le checklist di questa demo."
     : phases[nextIndex].tasks.find((_, taskIndex) => !completedForPhase(nextIndex).includes(taskIndex))?.title ?? phases[nextIndex].intro;
   document.querySelector("#next-action").innerHTML = `${next === -1 ? "Rivedi la checklist" : "Apri la checklist"} <span aria-hidden="true">→</span>`;
+  document.querySelector("#next-action").dataset.phase = String(nextIndex);
   document.querySelector("#continue-button").innerHTML = `${next === -1 ? "Rivedi il percorso" : "Continua il percorso"} <span aria-hidden="true">→</span>`;
   document.querySelector("#continue-button").dataset.phase = String(nextIndex);
 }
@@ -319,7 +320,8 @@ document.querySelector("#continue-button").addEventListener("click", event => {
   document.querySelector("#percorso").scrollIntoView({ behavior: "smooth" });
 });
 
-document.querySelector("#next-action").addEventListener("click", () => {
+document.querySelector("#next-action").addEventListener("click", event => {
+  setActivePhase(Number(event.currentTarget.dataset.phase));
   document.querySelector("#percorso").scrollIntoView({ behavior: "smooth" });
 });
 

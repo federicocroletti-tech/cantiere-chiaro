@@ -225,7 +225,7 @@ h1 span { color: var(--green); }
 .article-body h4 { margin: 13px 0 7px; color: #46564a; font-size: 11px; }
 .article-body ul { display: grid; gap: 6px; margin: 0 0 12px; padding-left: 18px; }
 .sources-section { margin-top: 37px; }
-.source-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.source-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
 .source-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 9px; background: var(--card); box-shadow: var(--shadow); }
 .source-tag { display: inline-flex; align-items: center; padding: 4px 7px; border-radius: 20px; background: #edf3ef; color: #4d695d; font-size: 8px; letter-spacing: .9px; font-weight: 700; }
 .source-card h3 { margin: 12px 0 8px; color: #354139; font-family: Manrope, sans-serif; font-size: 15px; letter-spacing: -.25px; }

@@ -6,11 +6,27 @@ test('la landing page mostra il percorso e le fonti di supporto', async ({ page 
   await expect(page).toHaveTitle(/Cantiere Chiaro/i);
   await expect(page.getByRole('heading', { name: /Ristrutturare, con più/i })).toBeVisible();
   await expect(page.locator('#fonti')).toContainText('FONTI E VERIFICA');
+  await expect(page.locator('#fonti')).toContainText("Testo Unico dell'Edilizia");
+  await expect(page.locator('#fonti a[href^="https://www.normattiva.it/"]')).toHaveAttribute('target', '_blank');
 
   await page.getByRole('button', { name: /serve una mano\?/i }).click();
   await expect(page.locator('#sicurezza')).toBeVisible();
   await page.locator('#close-dialog').click();
   await expect(page.locator('#sicurezza')).not.toBeVisible();
+});
+
+test('il pulsante prossimo passo apre la fase successiva', async ({ page }) => {
+  await page.goto('/');
+
+  for (let taskIndex = 0; taskIndex < 3; taskIndex += 1) {
+    await page.locator(`[data-task="${taskIndex}"]`).check();
+  }
+
+  await expect(page.locator('#next-title')).toHaveText('Confronta le offerte, non solo i totali');
+  await page.locator('#next-action').click();
+
+  await expect(page.locator('#phase-tab-1')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#phase-detail h3')).toHaveText('Confronta le offerte, non solo i totali');
 });
 
 test('la checklist aggiorna il progresso e il diario salva le note', async ({ page }) => {
