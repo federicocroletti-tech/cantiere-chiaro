@@ -1,14 +1,42 @@
 const PHASES = [
-  { title: 'Metti a fuoco il progetto', description: 'Definisci obiettivi, vincoli, tempi e budget.' },
-  { title: 'Verifica la situazione esistente', description: 'Controlla lo stato della casa e i punti critici.' },
-  { title: 'Prepara i documenti', description: 'Raccogli foto, misure e tutte le informazioni utili.' },
-  { title: 'Confronta preventivi', description: 'Richiedi almeno tre offerte e confronta i dettagli.' },
-  { title: 'Decidi le priorità', description: 'Scegli cosa fare subito e cosa va rimandato.' },
-  { title: 'Monitora e firma', description: 'Tieni traccia delle decisioni e verifica tutto prima della firma.' }
+  {
+    title: 'Metti a fuoco il progetto',
+    description: 'Definisci obiettivi, vincoli, tempi e budget.',
+    tasks: ['Scrivi cosa vuoi cambiare e perché', 'Raccogli misure, foto e documenti disponibili', 'Definisci un budget realistico e un margine per gli imprevisti']
+  },
+  {
+    title: 'Confronta le offerte, non solo i totali',
+    description: 'Confronta le voci e chiarisci cosa è incluso o escluso.',
+    tasks: ['Richiedi preventivi con voci e quantità dettagliate', 'Confronta materiali, finiture e lavorazioni', 'Chiedi di specificare tempi, esclusioni e costi extra']
+  },
+  {
+    title: 'Verifica la situazione esistente',
+    description: 'Controlla lo stato della casa e i punti critici con un tecnico.',
+    tasks: ['Annota i problemi e le priorità dell’immobile', 'Verifica vincoli e pratiche con il Comune o un tecnico', 'Conserva una documentazione fotografica datata']
+  },
+  {
+    title: 'Prepara documenti e accordi',
+    description: 'Raccogli gli allegati e chiarisci le condizioni prima di iniziare.',
+    tasks: ['Rivedi contratto, capitolato e allegati', 'Definisci modalità di pagamento e gestione varianti', 'Conserva preventivi, ricevute e comunicazioni']
+  },
+  {
+    title: 'Decidi le priorità',
+    description: 'Scegli cosa fare subito e cosa può essere rimandato.',
+    tasks: ['Separa lavori indispensabili e desiderabili', 'Valuta gli impatti delle modifiche richieste', 'Conferma per iscritto le decisioni condivise']
+  },
+  {
+    title: 'Monitora i lavori e verifica',
+    description: 'Tieni traccia dell’avanzamento e controlla i risultati.',
+    tasks: ['Registra incontri, decisioni e richieste nel diario', 'Verifica le lavorazioni rispetto agli accordi', 'Raccogli documenti e conferme prima del saldo finale']
+  }
 ];
 
 const diaryKey = 'cantiere-chiaro-diary-v1';
 const familyKey = 'family-tree-studio-v1';
+const progressKey = 'cantiere-chiaro-progress-v1';
+
+let completedTasks = loadProgress();
+let activePhase = 0;
 
 const defaultFamily = {
   trees: [
@@ -64,6 +92,19 @@ function saveDiaryEntries(entries) {
   localStorage.setItem(diaryKey, JSON.stringify(entries));
 }
 
+function loadProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(progressKey) || '{}');
+    return saved && typeof saved === 'object' ? saved : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveProgress() {
+  localStorage.setItem(progressKey, JSON.stringify(completedTasks));
+}
+
 function escapeHtml(value = '') {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -74,8 +115,9 @@ function escapeHtml(value = '') {
 }
 
 function renderProgress() {
-  const completed = PHASES.filter((phase) => phase.done).length;
-  const percent = Math.round((completed / PHASES.length) * 100);
+  const completed = PHASES.reduce((count, phase, index) => count + (completedTasks[index] || []).length, 0);
+  const totalTasks = PHASES.reduce((count, phase) => count + phase.tasks.length, 0);
+  const percent = Math.round((completed / totalTasks) * 100);
   const value = document.getElementById('progress-value');
   const ring = document.getElementById('progress-ring');
   const bar = document.getElementById('progress-bar');
@@ -87,7 +129,7 @@ function renderProgress() {
 
   value.textContent = String(percent);
   count.textContent = String(completed);
-  total.textContent = String(PHASES.length);
+  total.textContent = String(totalTasks);
   bar.style.width = `${percent}%`;
 
   const radius = 31;
@@ -95,16 +137,45 @@ function renderProgress() {
   ring.style.strokeDasharray = String(circumference);
   ring.style.strokeDashoffset = String(circumference - (percent / 100) * circumference);
 
-  const next = PHASES.find((phase) => !phase.done) || PHASES[PHASES.length - 1];
-  nextTitle.textContent = completed >= PHASES.length ? 'Percorso completo' : next.title;
-  nextDescription.textContent = completed >= PHASES.length
-    ? 'Hai chiuso tutti i passaggi: controlla le verifiche finali e conferma le decisioni.'
+  const nextIndex = PHASES.findIndex((phase, index) => (completedTasks[index] || []).length < phase.tasks.length);
+  const nextPhaseIndex = nextIndex === -1 ? PHASES.length - 1 : nextIndex;
+  const next = PHASES[nextPhaseIndex];
+  nextTitle.textContent = nextIndex === -1 ? 'Percorso completo' : next.title;
+  nextDescription.textContent = nextIndex === -1
+    ? 'Hai completato tutte le fasi. Rivedi le verifiche finali e conserva i documenti.'
     : next.description;
+  const nextAction = document.getElementById('next-action');
+  const continueButton = document.getElementById('continue-button');
+  if (nextAction) nextAction.dataset.phase = String(nextPhaseIndex);
+  if (continueButton) continueButton.dataset.phase = String(nextPhaseIndex);
 
   if (stepIndex) {
-    const nextNumber = completed >= PHASES.length ? PHASES.length : (PHASES.findIndex((phase) => !phase.done) + 1 || 1);
+    const nextNumber = nextPhaseIndex + 1;
     stepIndex.innerHTML = `${String(nextNumber).padStart(2, '0')} <span>/ 06</span>`;
   }
+}
+
+function renderPhases() {
+  const phaseList = document.getElementById('phase-list');
+  const detail = document.getElementById('phase-detail');
+  if (!phaseList || !detail) return;
+
+  phaseList.innerHTML = PHASES.map((phase, index) => {
+    const isComplete = (completedTasks[index] || []).length === phase.tasks.length;
+    return `<button type="button" class="phase-tab ${activePhase === index ? 'active' : ''}" id="phase-tab-${index}" role="tab" aria-selected="${activePhase === index}" aria-controls="phase-detail" data-phase="${index}">
+      <span class="phase-tab-index">${String(index + 1).padStart(2, '0')}</span>
+      <span>${escapeHtml(phase.title)}</span>
+      ${isComplete ? '<span aria-label="Completata">✓</span>' : ''}
+    </button>`;
+  }).join('');
+
+  const phase = PHASES[activePhase];
+  const done = new Set(completedTasks[activePhase] || []);
+  detail.innerHTML = `<h3>${escapeHtml(phase.title)}</h3><p>${escapeHtml(phase.description)}</p>
+    <div class="phase-tasks">${phase.tasks.map((task, index) => `<label class="phase-item">
+      <input type="checkbox" data-task="${index}" ${done.has(index) ? 'checked' : ''}>
+      <span class="phase-item-label"><strong>${escapeHtml(task)}</strong></span>
+    </label>`).join('')}</div>`;
 }
 
 function renderDiary() {
@@ -130,51 +201,49 @@ function renderDiary() {
 
 function initializeLegacyDemo() {
   const phaseList = document.getElementById('phase-list');
-  if (phaseList) {
-    phaseList.innerHTML = PHASES.map((phase, index) => `
-      <label class="phase-item">
-        <input type="checkbox" data-task="${index}">
-        <span class="phase-item-label">
-          <strong>${phase.title}</strong>
-          <span>${phase.description}</span>
-        </span>
-      </label>
-    `).join('');
-
-    phaseList.querySelectorAll('input[data-task]').forEach((checkbox) => {
-      checkbox.addEventListener('change', (event) => {
-        const index = Number(event.target.getAttribute('data-task'));
-        PHASES[index].done = event.target.checked;
-        renderProgress();
-      });
-    });
-  }
-
   const detail = document.getElementById('phase-detail');
-  if (detail) {
-    detail.innerHTML = `<h3>${PHASES[0].title}</h3><p>${PHASES[0].description}</p>`;
-  }
+  phaseList?.setAttribute('role', 'tablist');
+  phaseList?.addEventListener('click', (event) => {
+    const tab = event.target.closest('[data-phase]');
+    if (!tab) return;
+    activePhase = Number(tab.dataset.phase);
+    renderPhases();
+  });
+  phaseList?.addEventListener('keydown', (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 0
+      : event.key === 'End' ? PHASES.length - 1
+        : (activePhase + (event.key === 'ArrowRight' ? 1 : -1) + PHASES.length) % PHASES.length;
+    activePhase = next;
+    renderPhases();
+    document.getElementById(`phase-tab-${activePhase}`)?.focus();
+  });
 
-  const nextAction = document.getElementById('next-action');
-  if (nextAction) {
-    nextAction.addEventListener('click', () => {
-      const next = PHASES.find((phase) => !phase.done) || PHASES[PHASES.length - 1];
-      const target = detail;
-      if (target) target.innerHTML = `<h3>${next.title}</h3><p>${next.description}</p>`;
-    });
-  }
+  detail?.addEventListener('change', (event) => {
+    const checkbox = event.target.closest('[data-task]');
+    if (!checkbox) return;
+    const tasks = new Set(completedTasks[activePhase] || []);
+    if (checkbox.checked) tasks.add(Number(checkbox.dataset.task));
+    else tasks.delete(Number(checkbox.dataset.task));
+    completedTasks[activePhase] = [...tasks].sort((a, b) => a - b);
+    saveProgress();
+    renderProgress();
+    renderPhases();
+  });
 
-  const continueButton = document.getElementById('continue-button');
-  if (continueButton) {
-    continueButton.addEventListener('click', () => {
-      const next = PHASES.find((phase) => !phase.done) || PHASES[PHASES.length - 1];
-      if (detail) detail.innerHTML = `<h3>${next.title}</h3><p>${next.description}</p>`;
-    });
-  }
+  const openNextPhase = (event) => {
+    activePhase = Number(event.currentTarget.dataset.phase || 0);
+    renderPhases();
+    document.getElementById('percorso')?.scrollIntoView({ behavior: 'smooth' });
+  };
+  document.getElementById('next-action')?.addEventListener('click', openNextPhase);
+  document.getElementById('continue-button')?.addEventListener('click', openNextPhase);
 
   document.getElementById('reset-button')?.addEventListener('click', () => {
-    PHASES.forEach((phase) => { phase.done = false; });
-    phaseList?.querySelectorAll('input[data-task]').forEach((checkbox) => { checkbox.checked = false; });
+    completedTasks = {};
+    saveProgress();
+    renderPhases();
     renderProgress();
   });
 
@@ -219,6 +288,12 @@ function initializeLegacyDemo() {
     URL.revokeObjectURL(url);
   });
 
+  const diaryDate = document.getElementById('diary-date');
+  if (diaryDate && !diaryDate.value) {
+    const now = new Date();
+    diaryDate.value = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+  renderPhases();
   renderProgress();
   renderDiary();
 }
