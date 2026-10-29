@@ -1,4 +1,4 @@
-name: Deploy static site to GitHub Pages
+name: Deploy Cantiere Chiaro to GitHub Pages
 
 on:
   push:
@@ -33,9 +33,7 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
       - name: Run browser tests
-        run: |
-          npm run test:playwright
-          npx playwright test --config familytree-studio/playwright.config.js
+        run: npm run test:playwright
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
@@ -44,8 +42,6 @@ jobs:
         run: |
           mkdir site
           cp index.html styles.css app.js site/
-          mkdir -p site/familytree-studio
-          cp -R familytree-studio/. site/familytree-studio/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
