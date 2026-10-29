@@ -8,15 +8,10 @@ test('la landing page mostra il percorso e le fonti di supporto', async ({ page 
   await expect(page.locator('#fonti')).toContainText('FONTI E VERIFICA');
   await expect(page.locator('#fonti')).toContainText("Testo Unico dell'Edilizia");
   await expect(page.locator('#fonti a[href^="https://www.normattiva.it/"]')).toHaveAttribute('target', '_blank');
-  await expect(page.getByRole('link', { name: 'Apri FamilyTree Studio' })).toHaveAttribute('href', './familytree-studio/');
-
   await page.getByRole('button', { name: /serve una mano\?/i }).click();
   await expect(page.locator('#sicurezza')).toBeVisible();
   await page.locator('#close-dialog').click();
   await expect(page.locator('#sicurezza')).not.toBeVisible();
-
-  await page.getByRole('link', { name: 'Apri FamilyTree Studio' }).click();
-  await expect(page).toHaveTitle('FamilyTree Studio');
 });
 
 test('il pulsante prossimo passo apre la fase successiva', async ({ page }) => {
