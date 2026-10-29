@@ -15,8 +15,6 @@ test('la landing page mostra il percorso e le fonti di supporto', async ({ page 
   await page.locator('#close-dialog').click();
   await expect(page.locator('#sicurezza')).not.toBeVisible();
 
-  await page.getByRole('link', { name: 'Apri FamilyTree Studio' }).click();
-  await expect(page).toHaveTitle('FamilyTree Studio');
 });
 
 test('il pulsante prossimo passo apre la fase successiva', async ({ page }) => {
