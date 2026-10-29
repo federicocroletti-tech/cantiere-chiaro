@@ -1,864 +1,463 @@
-const PHASES = [
+const phases = [
   {
-    title: 'Metti a fuoco il progetto',
-    description: 'Definisci obiettivi, vincoli, tempi e budget.',
-    tasks: ['Scrivi cosa vuoi cambiare e perché', 'Raccogli misure, foto e documenti disponibili', 'Definisci un budget realistico e un margine per gli imprevisti']
+    title: "Prima di partire",
+    heading: "Metti a fuoco il progetto",
+    intro: "Prima di chiedere preventivi, chiarisci obiettivi e vincoli. Un brief semplice aiuta te e i professionisti a parlare della stessa cosa.",
+    tasks: [
+      { title: "Scrivi cosa vuoi cambiare e perché", detail: "Separa ciò che è indispensabile da ciò che è un desiderio." },
+      { title: "Raccogli misure, foto e documenti disponibili", detail: "Annota dubbi e vincoli; fai verificare i dati tecnici." },
+      { title: "Stabilisci un budget orientativo e un margine", detail: "Chiedi quali voci sono escluse e quali imprevisti potrebbero emergere." }
+    ],
+    questions: [
+      "Quali aspetti richiedono un progetto o una verifica tecnica?",
+      "Quali decisioni devo prendere prima di chiedere un'offerta?"
+    ],
+    note: "Per pratiche edilizie e vincoli, confrontati con un tecnico abilitato del tuo Comune."
   },
   {
-    title: 'Confronta le offerte, non solo i totali',
-    description: 'Confronta le voci e chiarisci cosa è incluso o escluso.',
-    tasks: ['Richiedi preventivi con voci e quantità dettagliate', 'Confronta materiali, finiture e lavorazioni', 'Chiedi di specificare tempi, esclusioni e costi extra']
+    title: "Scegliere l'impresa",
+    heading: "Confronta le offerte, non solo i totali",
+    intro: "Per capire se due offerte sono confrontabili, guarda nel dettaglio lavorazioni, materiali, esclusioni, tempi e responsabilità indicate.",
+    tasks: [
+      { title: "Chiedi offerte scritte e con voci dettagliate", detail: "Descrizione, quantità, materiali e criteri di misurazione dovrebbero essere comprensibili." },
+      { title: "Chiarisci cosa è incluso e cosa resta fuori", detail: "Trasporti, smaltimenti, protezioni, ripristini e forniture possono variare." },
+      { title: "Verifica referenze e identità dell'impresa", detail: "Confronta nominativi, dati aziendali e lavori simili; chiedi chi seguirà il cantiere." }
+    ],
+    questions: [
+      "Chi sarà il mio referente quotidiano?",
+      "Quali lavorazioni o forniture non sono comprese nel prezzo?"
+    ],
+    note: "Per aspetti fiscali, autorizzativi o di sicurezza, chiedi verifiche aggiornate a professionisti o enti competenti."
   },
   {
-    title: 'Verifica la situazione esistente',
-    description: 'Controlla lo stato della casa e i punti critici con un tecnico.',
-    tasks: ['Annota i problemi e le priorità dell’immobile', 'Verifica vincoli e pratiche con il Comune o un tecnico', 'Conserva una documentazione fotografica datata']
+    title: "Accordi scritti",
+    heading: "Metti nero su bianco gli accordi",
+    intro: "Un accordo chiaro riduce le incomprensioni: controlla che documenti e allegati descrivano il lavoro che ti aspetti.",
+    tasks: [
+      { title: "Leggi contratto e allegati prima di firmare", detail: "Controlla ambito dei lavori, materiali, prezzo, esclusioni e riferimenti ai documenti allegati." },
+      { title: "Concorda tempi e modalità di pagamento", detail: "Chiedi un calendario comprensibile collegato alle fasi e ai documenti di spesa." },
+      { title: "Chiarisci come si approvano modifiche e varianti", detail: "Fatti indicare come saranno comunicati costi e impatto sui tempi prima di procedere." }
+    ],
+    questions: [
+      "Come verranno autorizzati e valorizzati eventuali lavori extra?",
+      "A chi mi rivolgo se emerge un problema o un ritardo?"
+    ],
+    note: "In caso di clausole poco chiare o importi rilevanti, valuta una revisione indipendente prima della firma."
   },
   {
-    title: 'Prepara documenti e accordi',
-    description: 'Raccogli gli allegati e chiarisci le condizioni prima di iniziare.',
-    tasks: ['Rivedi contratto, capitolato e allegati', 'Definisci modalità di pagamento e gestione varianti', 'Conserva preventivi, ricevute e comunicazioni']
+    title: "Durante i lavori",
+    heading: "Segui l'avanzamento con metodo",
+    intro: "Un punto periodico con il referente e un archivio ordinato aiutano a gestire dubbi, decisioni e cambiamenti senza affidarsi alla memoria.",
+    tasks: [
+      { title: "Concorda aggiornamenti regolari con il referente", detail: "Annota decisioni, responsabilità e prossimi passaggi dopo ogni confronto." },
+      { title: "Fotografa l'avanzamento in modo datato", detail: "Organizza le immagini per stanza o fase e conserva gli originali." },
+      { title: "Comunica per iscritto problemi e richieste", detail: "Descrivi il fatto, allega evidenze e chiedi tempi e modalità di riscontro." }
+    ],
+    questions: [
+      "Quale lavorazione si farà adesso e quale viene dopo?",
+      "Chi deve approvare una scelta prima che si proceda?"
+    ],
+    note: "Non intervenire su impianti o opere tecniche: sottoponi dubbi al professionista responsabile."
   },
   {
-    title: 'Decidi le priorità',
-    description: 'Scegli cosa fare subito e cosa può essere rimandato.',
-    tasks: ['Separa lavori indispensabili e desiderabili', 'Valuta gli impatti delle modifiche richieste', 'Conferma per iscritto le decisioni condivise']
+    title: "Varianti e pagamenti",
+    heading: "Fai chiarezza prima di approvare",
+    intro: "Se il lavoro cambia, fermati a capire cosa comporta. Conserva richiesta, motivazione, importo e aggiornamento dei tempi.",
+    tasks: [
+      { title: "Chiedi una descrizione scritta di ogni variante", detail: "Fatti spiegare cosa cambia rispetto all'accordo e perché è necessario." },
+      { title: "Valuta costi e tempi aggiuntivi prima di dare l'ok", detail: "Richiedi l'impatto complessivo e una conferma tracciabile dell'accordo." },
+      { title: "Abbina ogni pagamento a documenti e stato dei lavori", detail: "Conserva fatture, ricevute e riferimenti alla fase o alla voce concordata." }
+    ],
+    questions: [
+      "È una lavorazione già prevista o una modifica rispetto all'accordo?",
+      "Posso avere il dettaglio del costo e dell'impatto sui tempi per iscritto?"
+    ],
+    note: "Se non concordi su importi o prestazioni, non prendere decisioni affrettate: chiedi un parere indipendente."
   },
   {
-    title: 'Monitora i lavori e verifica',
-    description: 'Tieni traccia dell’avanzamento e controlla i risultati.',
-    tasks: ['Registra incontri, decisioni e richieste nel diario', 'Verifica le lavorazioni rispetto agli accordi', 'Raccogli documenti e conferme prima del saldo finale']
+    title: "Verifiche finali",
+    heading: "Controlla e raccogli i documenti",
+    intro: "Prima di considerare concluso il lavoro, organizza un sopralluogo, annota ciò che resta da sistemare e chiedi la documentazione prevista per il tuo intervento.",
+    tasks: [
+      { title: "Fai un giro di verifica con una lista stanza per stanza", detail: "Registra difformità o lavorazioni da completare con foto e descrizioni chiare." },
+      { title: "Metti per iscritto le osservazioni e gli accordi di chiusura", detail: "Invia l'elenco ai referenti e conserva la risposta e le date concordate." },
+      { title: "Chiedi e archivia i documenti di fine lavori pertinenti", detail: "La documentazione dipende dagli interventi: verifica con il tecnico responsabile cosa è necessario." }
+    ],
+    questions: [
+      "Quali verifiche e documenti sono previsti per questo intervento?",
+      "Come vengono gestite e tracciate le lavorazioni ancora da completare?"
+    ],
+    note: "Prima di firmare verbali di chiusura o saldare importi contestati, valuta il supporto di un professionista."
   }
 ];
 
-const diaryKey = 'cantiere-chiaro-diary-v1';
-const familyKey = 'family-tree-studio-v1';
-const progressKey = 'cantiere-chiaro-progress-v1';
-
-let completedTasks = loadProgress();
-let activePhase = 0;
-
-const defaultFamily = {
-  trees: [
-    { id: 'tree-1', name: 'Famiglia Rossi', description: 'Ramo principale' }
-  ],
-  people: [
-    { id: 'p1', treeId: 'tree-1', firstName: 'Luca', lastName: 'Rossi', birthDate: '1975-03-14', place: 'Milano', gender: 'Maschio', notes: 'Capofamiglia', photo: '', color: '#dfeccf' },
-    { id: 'p2', treeId: 'tree-1', firstName: 'Anna', lastName: 'Bianchi', birthDate: '1979-07-20', place: 'Roma', gender: 'Femmina', notes: 'Madre della famiglia', photo: '', color: '#e9d8f7' },
-    { id: 'p3', treeId: 'tree-1', firstName: 'Marco', lastName: 'Rossi', birthDate: '2001-11-02', place: 'Milano', gender: 'Maschio', notes: 'Figlio primogenito', photo: '', color: '#f5d7a4' },
-    { id: 'p4', treeId: 'tree-1', firstName: 'Sofia', lastName: 'Rossi', birthDate: '2004-05-18', place: 'Milano', gender: 'Femmina', notes: 'Seconda figlia', photo: '', color: '#f5d4df' },
-    { id: 'p5', treeId: 'tree-1', firstName: 'Giulia', lastName: 'Rossi', birthDate: '1998-09-12', place: 'Bergamo', gender: 'Femmina', notes: 'Figlia maggiore', photo: '', color: '#d7ebf2' }
-  ],
-  relationships: [
-    { id: 'r1', treeId: 'tree-1', type: 'spouseOf', personA: 'p1', personB: 'p2' },
-    { id: 'r2', treeId: 'tree-1', type: 'parentOf', personA: 'p1', personB: 'p3' },
-    { id: 'r3', treeId: 'tree-1', type: 'parentOf', personA: 'p1', personB: 'p4' },
-    { id: 'r4', treeId: 'tree-1', type: 'parentOf', personA: 'p2', personB: 'p3' },
-    { id: 'r5', treeId: 'tree-1', type: 'parentOf', personA: 'p2', personB: 'p4' },
-    { id: 'r6', treeId: 'tree-1', type: 'parentOf', personA: 'p1', personB: 'p5' },
-    { id: 'r7', treeId: 'tree-1', type: 'parentOf', personA: 'p2', personB: 'p5' }
-  ],
-  treeId: 'tree-1'
+const storageKey = "cantiere-chiaro-demo-v1";
+const diaryStorageKey = "cantiere-chiaro-diario-v1";
+const diaryCategories = {
+  decisione: "Decisione",
+  aggiornamento: "Aggiornamento",
+  problema: "Problema o richiesta",
+  pagamento: "Pagamento o spesa",
+  incontro: "Incontro o telefonata"
 };
-
-let state = loadFamilyState();
-let selectedPersonId = state.people[0]?.id ?? null;
-let installPrompt = null;
-
-function loadFamilyState() {
-  try {
-    const raw = localStorage.getItem(familyKey);
-    if (!raw) return JSON.parse(JSON.stringify(defaultFamily));
-    const parsed = JSON.parse(raw);
-    return parsed && parsed.trees ? parsed : JSON.parse(JSON.stringify(defaultFamily));
-  } catch {
-    return JSON.parse(JSON.stringify(defaultFamily));
-  }
-}
-
-function saveFamilyState() {
-  localStorage.setItem(familyKey, JSON.stringify(state));
-}
-
-function readDiaryEntries() {
-  try {
-    return JSON.parse(localStorage.getItem(diaryKey) || '[]');
-  } catch {
-    return [];
-  }
-}
-
-function saveDiaryEntries(entries) {
-  localStorage.setItem(diaryKey, JSON.stringify(entries));
-}
+const phaseList = document.querySelector("#phase-list");
+const phaseDetail = document.querySelector("#phase-detail");
+const dialog = document.querySelector("#sicurezza");
+const backdrop = document.querySelector("#dialog-backdrop");
+let activePhase = 0;
+let completed = loadProgress();
+let diaryEntries = loadDiary();
 
 function loadProgress() {
   try {
-    const saved = JSON.parse(localStorage.getItem(progressKey) || '{}');
-    return saved && typeof saved === 'object' ? saved : {};
-  } catch {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+    return saved && typeof saved === "object" && !Array.isArray(saved) ? saved : {};
+  } catch (error) {
+    console.warn("Impossibile leggere i progressi salvati per questa demo.", error);
     return {};
   }
 }
 
 function saveProgress() {
-  localStorage.setItem(progressKey, JSON.stringify(completedTasks));
-}
-
-function escapeHtml(value = '') {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-function renderProgress() {
-  const completed = PHASES.reduce((count, phase, index) => count + (completedTasks[index] || []).length, 0);
-  const totalTasks = PHASES.reduce((count, phase) => count + phase.tasks.length, 0);
-  const percent = Math.round((completed / totalTasks) * 100);
-  const value = document.getElementById('progress-value');
-  const ring = document.getElementById('progress-ring');
-  const bar = document.getElementById('progress-bar');
-  const count = document.getElementById('completed-count');
-  const total = document.getElementById('total-count');
-  const nextTitle = document.getElementById('next-title');
-  const nextDescription = document.getElementById('next-description');
-  const stepIndex = document.querySelector('.step-index');
-
-  value.textContent = String(percent);
-  count.textContent = String(completed);
-  total.textContent = String(totalTasks);
-  bar.style.width = `${percent}%`;
-
-  const radius = 31;
-  const circumference = 2 * Math.PI * radius;
-  ring.style.strokeDasharray = String(circumference);
-  ring.style.strokeDashoffset = String(circumference - (percent / 100) * circumference);
-
-  const nextIndex = PHASES.findIndex((phase, index) => (completedTasks[index] || []).length < phase.tasks.length);
-  const nextPhaseIndex = nextIndex === -1 ? PHASES.length - 1 : nextIndex;
-  const next = PHASES[nextPhaseIndex];
-  nextTitle.textContent = nextIndex === -1 ? 'Percorso completo' : next.title;
-  nextDescription.textContent = nextIndex === -1
-    ? 'Hai completato tutte le fasi. Rivedi le verifiche finali e conserva i documenti.'
-    : next.description;
-  const nextAction = document.getElementById('next-action');
-  const continueButton = document.getElementById('continue-button');
-  if (nextAction) nextAction.dataset.phase = String(nextPhaseIndex);
-  if (continueButton) continueButton.dataset.phase = String(nextPhaseIndex);
-
-  if (stepIndex) {
-    const nextNumber = nextPhaseIndex + 1;
-    stepIndex.innerHTML = `${String(nextNumber).padStart(2, '0')} <span>/ 06</span>`;
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(completed));
+  } catch (error) {
+    console.warn("Impossibile salvare i progressi nel browser.", error);
   }
 }
 
-function renderPhases() {
-  const phaseList = document.getElementById('phase-list');
-  const detail = document.getElementById('phase-detail');
-  if (!phaseList || !detail) return;
+function loadDiary() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(diaryStorageKey) || "[]");
+    if (!Array.isArray(saved)) throw new TypeError("Il diario salvato non ha il formato previsto.");
+    const validEntries = saved.filter(entry =>
+      entry &&
+      typeof entry.id === "string" &&
+      typeof entry.date === "string" &&
+      /^\d{4}-\d{2}-\d{2}$/.test(entry.date) &&
+      typeof entry.category === "string" &&
+      Object.hasOwn(diaryCategories, entry.category) &&
+      typeof entry.title === "string" &&
+      typeof entry.description === "string"
+    );
+    if (validEntries.length !== saved.length) {
+      console.warn("Alcune note del diario salvato non sono valide e non verranno mostrate.");
+    }
+    return validEntries;
+  } catch (error) {
+    console.warn("Impossibile leggere il diario salvato per questa demo.", error);
+    return [];
+  }
+}
 
-  phaseList.innerHTML = PHASES.map((phase, index) => {
-    const isComplete = (completedTasks[index] || []).length === phase.tasks.length;
-    return `<button type="button" class="phase-tab ${activePhase === index ? 'active' : ''}" id="phase-tab-${index}" role="tab" aria-selected="${activePhase === index}" aria-controls="phase-detail" data-phase="${index}">
-      <span class="phase-tab-index">${String(index + 1).padStart(2, '0')}</span>
-      <span>${escapeHtml(phase.title)}</span>
-      ${isComplete ? '<span aria-label="Completata">✓</span>' : ''}
-    </button>`;
-  }).join('');
+function saveDiary() {
+  try {
+    localStorage.setItem(diaryStorageKey, JSON.stringify(diaryEntries));
+    return true;
+  } catch (error) {
+    console.warn("Impossibile salvare il diario nel browser.", error);
+    setDiaryStatus("Salvataggio non riuscito: il browser potrebbe non avere spazio disponibile. Esporta o annota le modifiche prima di chiudere la pagina.", true);
+    return false;
+  }
+}
 
-  const phase = PHASES[activePhase];
-  const done = new Set(completedTasks[activePhase] || []);
-  detail.innerHTML = `<h3>${escapeHtml(phase.title)}</h3><p>${escapeHtml(phase.description)}</p>
-    <div class="phase-tasks">${phase.tasks.map((task, index) => `<label class="phase-item">
-      <input type="checkbox" data-task="${index}" ${done.has(index) ? 'checked' : ''}>
-      <span class="phase-item-label"><strong>${escapeHtml(task)}</strong></span>
-    </label>`).join('')}</div>`;
+function setDiaryStatus(message, isError = false) {
+  const status = document.querySelector("#diary-status");
+  status.textContent = message;
+  status.classList.toggle("error", isError);
 }
 
 function renderDiary() {
-  const entries = readDiaryEntries();
-  const container = document.getElementById('diary-list');
-  const count = document.getElementById('diary-count');
-  if (count) count.textContent = `${entries.length} ${entries.length === 1 ? 'nota' : 'note'}`;
-  if (!container) return;
+  const container = document.querySelector("#diary-entries");
+  const count = document.querySelector("#diary-count");
+  const sortedEntries = [...diaryEntries].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  count.textContent = `${diaryEntries.length} ${diaryEntries.length === 1 ? "nota" : "note"}`;
+  container.replaceChildren();
 
-  if (!entries.length) {
-    container.innerHTML = '<li class="diary-item"><strong>Nessuna nota</strong><p>Le tue decisioni e i richiami appariranno qui.</p></li>';
+  if (sortedEntries.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "diary-empty";
+    empty.textContent = "Non hai ancora aggiunto note. Usa il modulo qui sopra per iniziare il tuo diario.";
+    container.append(empty);
     return;
   }
 
-  container.innerHTML = entries.map((entry) => `
-    <li class="diary-item">
-      <strong>${escapeHtml(entry.title || 'Nota')}</strong>
-      <small>${escapeHtml(entry.date || '')} · ${escapeHtml(entry.category || 'decisione')}</small>
-      <p>${escapeHtml(entry.description || '')}</p>
-    </li>
-  `).join('');
-}
+  for (const entry of sortedEntries) {
+    const article = document.createElement("article");
+    article.className = "diary-entry";
+    const meta = document.createElement("div");
+    meta.className = "diary-entry-meta";
+    const category = document.createElement("span");
+    category.className = `diary-entry-category ${entry.category}`;
+    category.textContent = diaryCategories[entry.category];
+    const date = document.createElement("time");
+    date.dateTime = entry.date;
+    date.textContent = new Intl.DateTimeFormat("it-IT", { dateStyle: "long", timeZone: "UTC" })
+      .format(new Date(`${entry.date}T00:00:00Z`));
+    meta.append(category, date);
 
-function initializeLegacyDemo() {
-  const phaseList = document.getElementById('phase-list');
-  const detail = document.getElementById('phase-detail');
-  phaseList?.setAttribute('role', 'tablist');
-  phaseList?.addEventListener('click', (event) => {
-    const tab = event.target.closest('[data-phase]');
-    if (!tab) return;
-    activePhase = Number(tab.dataset.phase);
-    renderPhases();
-  });
-  phaseList?.addEventListener('keydown', (event) => {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-    event.preventDefault();
-    const next = event.key === 'Home' ? 0
-      : event.key === 'End' ? PHASES.length - 1
-        : (activePhase + (event.key === 'ArrowRight' ? 1 : -1) + PHASES.length) % PHASES.length;
-    activePhase = next;
-    renderPhases();
-    document.getElementById(`phase-tab-${activePhase}`)?.focus();
-  });
-
-  detail?.addEventListener('change', (event) => {
-    const checkbox = event.target.closest('[data-task]');
-    if (!checkbox) return;
-    const tasks = new Set(completedTasks[activePhase] || []);
-    if (checkbox.checked) tasks.add(Number(checkbox.dataset.task));
-    else tasks.delete(Number(checkbox.dataset.task));
-    completedTasks[activePhase] = [...tasks].sort((a, b) => a - b);
-    saveProgress();
-    renderProgress();
-    renderPhases();
-  });
-
-  const openNextPhase = (event) => {
-    activePhase = Number(event.currentTarget.dataset.phase || 0);
-    renderPhases();
-    document.getElementById('percorso')?.scrollIntoView({ behavior: 'smooth' });
-  };
-  document.getElementById('next-action')?.addEventListener('click', openNextPhase);
-  document.getElementById('continue-button')?.addEventListener('click', openNextPhase);
-
-  document.getElementById('reset-button')?.addEventListener('click', () => {
-    completedTasks = {};
-    saveProgress();
-    renderPhases();
-    renderProgress();
-  });
-
-  document.getElementById('help-button')?.addEventListener('click', () => {
-    setDialogVisible('sicurezza', true);
-  });
-
-  document.getElementById('close-dialog')?.addEventListener('click', () => {
-    setDialogVisible('sicurezza', false);
-  });
-
-  document.getElementById('sicurezza')?.addEventListener('click', (event) => {
-    if (event.target === event.currentTarget) {
-      setDialogVisible('sicurezza', false);
-    }
-  });
-
-  document.getElementById('diary-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const form = new FormData(event.target);
-    const entry = {
-      date: form.get('date') || new Date().toISOString().slice(0, 10),
-      category: form.get('category') || 'decisione',
-      title: form.get('title') || 'Nota',
-      description: form.get('description') || ''
-    };
-    const entries = readDiaryEntries();
-    entries.unshift(entry);
-    saveDiaryEntries(entries);
-    event.target.reset();
-    renderDiary();
-  });
-
-  document.getElementById('export-diary')?.addEventListener('click', () => {
-    const data = JSON.stringify(readDiaryEntries(), null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `diario-lavori-${new Date().toISOString().slice(0, 10)}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  });
-
-  const diaryDate = document.getElementById('diary-date');
-  if (diaryDate && !diaryDate.value) {
-    const now = new Date();
-    diaryDate.value = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-  }
-  renderPhases();
-  renderProgress();
-  renderDiary();
-}
-
-function getSelectedTree() {
-  return state.trees.find((tree) => tree.id === state.treeId) || state.trees[0];
-}
-
-function getTreePeople(treeId = state.treeId) {
-  return state.people.filter((person) => person.treeId === treeId);
-}
-
-function getTreeRelationships(treeId = state.treeId) {
-  return state.relationships.filter((link) => link.treeId === treeId);
-}
-
-function getPersonById(id) {
-  return state.people.find((person) => person.id === id) || null;
-}
-
-function randomColor() {
-  const colors = ['#dfeecf', '#e7d9f8', '#f3d8a9', '#f5d3e2', '#d7ebf2', '#f0d7bf'];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
-
-function setDialogVisible(dialogId, isVisible) {
-  const dialog = document.getElementById(dialogId);
-  if (!dialog) return;
-  dialog.classList.toggle('hidden', !isVisible);
-  dialog.setAttribute('aria-hidden', String(!isVisible));
-}
-
-function renderTreeSummary() {
-  const summary = document.getElementById('tree-summary');
-  if (!summary) return;
-  const tree = getSelectedTree();
-  const people = getTreePeople();
-  const couples = getTreeRelationships().filter((link) => link.type === 'spouseOf').length;
-  summary.innerHTML = `
-    <div class="inline-header">
-      <h3>${escapeHtml(tree?.name || 'Albero famiglia')}</h3>
-      <span class="status-pill"><i></i> Locale</span>
-    </div>
-    <p class="muted-copy">${escapeHtml(tree?.description || 'Albero familiare locale')}</p>
-    <div class="detail-meta">
-      <div class="meta-item"><span>Persone</span><strong>${people.length}</strong></div>
-      <div class="meta-item"><span>Relazioni</span><strong>${getTreeRelationships().length}</strong></div>
-      <div class="meta-item"><span>Coppi e</span><strong>${couples}</strong></div>
-      <div class="meta-item"><span>Selezionato</span><strong>${selectedPersonId ? 'Sì' : 'No'}</strong></div>
-    </div>
-  `;
-}
-
-function renderTreeList() {
-  const treeList = document.getElementById('tree-list');
-  if (!treeList) return;
-  treeList.innerHTML = state.trees.map((tree) => `
-    <div class="tree-card ${tree.id === state.treeId ? 'active' : ''}">
-      <div class="tree-card-info">
-        <strong>${escapeHtml(tree.name)}</strong>
-        <span>${getTreePeople(tree.id).length} persone</span>
-      </div>
-      <button type="button" data-tree-id="${tree.id}">Apri</button>
-    </div>
-  `).join('');
-
-  treeList.querySelectorAll('[data-tree-id]').forEach((button) => {
-    button.addEventListener('click', () => {
-      state.treeId = button.dataset.treeId;
-      selectedPersonId = getTreePeople(state.treeId)[0]?.id ?? null;
-      saveFamilyState();
-      renderFamilyApp();
-    });
-  });
-
-  const count = document.getElementById('tree-count');
-  if (count) {
-    const total = state.trees.length;
-    count.textContent = `${total} ${total === 1 ? 'albero' : 'alberi'}`;
+    const title = document.createElement("h4");
+    title.textContent = entry.title;
+    const description = document.createElement("p");
+    description.textContent = entry.description;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "diary-remove";
+    remove.textContent = "Elimina";
+    remove.setAttribute("aria-label", `Elimina nota: ${entry.title}`);
+    remove.dataset.removeEntry = entry.id;
+    article.append(meta, title, description, remove);
+    container.append(article);
   }
 }
 
-function renderPeopleList() {
-  const peopleList = document.getElementById('people-list');
-  if (!peopleList) return;
-  const people = getTreePeople();
-  peopleList.innerHTML = people.map((person) => `
-    <div class="person-chip ${selectedPersonId === person.id ? 'active' : ''}">
-      <div class="person-meta">
-        <div class="avatar-mini">${(person.firstName || 'P').charAt(0).toUpperCase()}${(person.lastName || '').charAt(0).toUpperCase()}</div>
-        <div>
-          <strong>${escapeHtml(`${person.firstName || ''} ${person.lastName || ''}`.trim() || 'Persona')}</strong>
-          <small>${escapeHtml(person.place || 'Senza luogo')}</small>
-        </div>
-      </div>
-      <button type="button" data-select-person="${person.id}">Apri</button>
-    </div>
-  `).join('');
-
-  peopleList.querySelectorAll('[data-select-person]').forEach((button) => {
-    button.addEventListener('click', () => {
-      selectedPersonId = button.dataset.selectPerson;
-      renderFamilyApp();
-    });
-  });
+function completedForPhase(index) {
+  const phaseProgress = completed[index];
+  return Array.isArray(phaseProgress) ? phaseProgress : [];
 }
 
-function renderSearchResults() {
-  const search = document.getElementById('person-search');
-  const results = document.getElementById('search-results');
-  if (!search || !results) return;
-  const term = search.value.trim().toLowerCase();
-  if (!term) {
-    results.innerHTML = '';
-    return;
-  }
-
-  const matches = getTreePeople().filter((person) => {
-    const text = `${person.firstName || ''} ${person.lastName || ''} ${person.place || ''}`.toLowerCase();
-    return text.includes(term);
-  });
-
-  results.innerHTML = matches.slice(0, 6).map((person) => `
-    <div class="search-item">
-      <strong>${escapeHtml(`${person.firstName || ''} ${person.lastName || ''}`.trim() || 'Persona')}</strong>
-      <button type="button" data-select-person="${person.id}">Apri</button>
-    </div>
-  `).join('');
-
-  results.querySelectorAll('[data-select-person]').forEach((button) => {
-    button.addEventListener('click', () => {
-      selectedPersonId = button.dataset.selectPerson;
-      search.value = '';
-      renderFamilyApp();
-    });
-  });
-}
-
-function relationshipSummary(personId) {
-  const links = getTreeRelationships().filter((link) => link.personA === personId || link.personB === personId);
-  if (!links.length) return 'Nessuna relazione';
-
-  const summary = links.slice(0, 2).map((link) => {
-    const otherId = link.personA === personId ? link.personB : link.personA;
-    const other = getPersonById(otherId);
-    const label = link.type === 'spouseOf' ? 'coniuge' : link.type === 'parentOf' ? 'figlio/a' : 'fratello/a';
-    return `${label} ${other ? `${other.firstName} ${other.lastName}`.trim() : 'persona'}`;
-  });
-  return summary.join(', ');
+function renderPhases() {
+  phaseList.innerHTML = phases.map((phase, index) => {
+    const isComplete = phase.tasks.every((_, taskIndex) => completedForPhase(index).includes(taskIndex));
+    const state = isComplete ? "completed" : "";
+    const marker = isComplete
+      ? '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8 3 3 6-6"/></svg>'
+      : String(index + 1).padStart(2, "0");
+    return `<button type="button" class="phase-button ${state} ${activePhase === index ? "active" : ""}" id="phase-tab-${index}" role="tab" aria-selected="${activePhase === index}" aria-controls="phase-detail" tabindex="${activePhase === index ? "0" : "-1"}" data-phase="${index}"><span class="phase-dot">${marker}</span><span class="phase-label">${phase.title}</span></button>`;
+  }).join("");
 }
 
 function renderDetail() {
-  const detail = document.getElementById('person-detail');
-  if (!detail) return;
-  const person = getPersonById(selectedPersonId);
-  if (!person) {
-    detail.classList.add('empty');
-    detail.innerHTML = 'Seleziona o crea una persona';
-    return;
-  }
-
-  detail.classList.remove('empty');
-  detail.innerHTML = `
-    <div class="detail-header">
-      ${person.photo ? `<img class="detail-photo" src="${person.photo}" alt="${escapeHtml(person.firstName || 'Persona')}" />` : `<div class="detail-photo" style="display:grid;place-items:center;background:linear-gradient(135deg,#dfeee0,#bfd8c4);font-weight:700;color:#12372d;">${escapeHtml((person.firstName || 'P').charAt(0).toUpperCase())}</div>`}
-      <div>
-        <h3>${escapeHtml(`${person.firstName || ''} ${person.lastName || ''}`.trim() || 'Persona')}</h3>
-        <small>${escapeHtml(person.place || 'Luogo non indicato')}</small>
+  const phase = phases[activePhase];
+  const checked = completedForPhase(activePhase);
+  phaseDetail.setAttribute("aria-labelledby", `phase-tab-${activePhase}`);
+  phaseDetail.innerHTML = `
+    <div class="phase-detail-main">
+      <div class="phase-detail-eyebrow"><span></span> FASE ${String(activePhase + 1).padStart(2, "0")} · ${phase.title.toLocaleUpperCase("it-IT")}</div>
+      <h3>${phase.heading}</h3>
+      <p class="phase-detail-intro">${phase.intro}</p>
+      <div class="checklist" aria-label="Checklist: ${phase.title}">
+        ${phase.tasks.map((task, index) => `
+          <label class="check-item">
+            <input type="checkbox" data-task="${index}" ${checked.includes(index) ? "checked" : ""}>
+            <span><strong>${task.title}</strong><small>${task.detail}</small></span>
+          </label>
+        `).join("")}
       </div>
     </div>
-    <div class="detail-meta">
-      <div class="meta-item"><span>Data nascita</span><strong>${escapeHtml(person.birthDate || '—')}</strong></div>
-      <div class="meta-item"><span>Data morte</span><strong>${escapeHtml(person.deathDate || '—')}</strong></div>
-      <div class="meta-item"><span>Genere</span><strong>${escapeHtml(person.gender || '—')}</strong></div>
-      <div class="meta-item"><span>Relazioni</span><strong>${escapeHtml(relationshipSummary(person.id))}</strong></div>
-    </div>
-    <div>
-      <h4>Note</h4>
-      <p class="person-notes">${escapeHtml(person.notes || 'Nessuna nota aggiunta.')}</p>
-    </div>
-    <div class="detail-actions">
-      <button type="button" class="button secondary" data-edit-person="${person.id}">Modifica</button>
-      <button type="button" class="button secondary" data-link-person="${person.id}">Collega</button>
-      <button type="button" class="button secondary" data-delete-person="${person.id}">Elimina</button>
-    </div>
+    <aside class="phase-aside" aria-label="Domande e promemoria">
+      <div class="aside-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-1 .8-1.7 1.2-1.7 2.7M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>Domande da fare</div>
+      <ul class="question-list">${phase.questions.map(question => `<li>${question}</li>`).join("")}</ul>
+      <p class="phase-aside-note">${phase.note}</p>
+    </aside>
   `;
-
-  detail.querySelector('[data-edit-person]')?.addEventListener('click', () => openPersonModal(person.id));
-  detail.querySelector('[data-link-person]')?.addEventListener('click', () => openRelationModal(person.id));
-  detail.querySelector('[data-delete-person]')?.addEventListener('click', () => {
-    state.people = state.people.filter((entry) => entry.id !== person.id);
-    state.relationships = state.relationships.filter((link) => link.personA !== person.id && link.personB !== person.id);
-    selectedPersonId = getTreePeople()[0]?.id ?? null;
-    saveFamilyState();
-    renderFamilyApp();
-  });
 }
 
-function renderGraph() {
-  const svg = document.getElementById('family-graph');
-  if (!svg) return;
-  svg.innerHTML = '';
-  const people = getTreePeople();
-  if (!people.length) {
-    svg.innerHTML = '<text x="600" y="380" text-anchor="middle" fill="#5a6e68" font-size="22">Aggiungi una persona per iniziare il tuo albero</text>';
-    return;
-  }
+function renderProgress() {
+  const total = phases.reduce((sum, phase) => sum + phase.tasks.length, 0);
+  const done = phases.reduce((sum, phase, index) => sum + completedForPhase(index).length, 0);
+  const percent = total ? Math.round((done / total) * 100) : 0;
+  document.querySelector("#progress-value").textContent = String(percent);
+  document.querySelector("#completed-count").textContent = String(done);
+  document.querySelector("#total-count").textContent = String(total);
+  document.querySelector("#progress-bar").style.width = `${percent}%`;
+  document.querySelector("#progress-ring").style.strokeDashoffset = String(195 - (195 * percent / 100));
+  document.querySelector(".ring-wrap").setAttribute("aria-label", `Progresso ${percent}%`);
 
-  const positions = {};
-  const columns = Math.max(3, Math.ceil(Math.sqrt(people.length * 1.6)));
-  people.forEach((person, index) => {
-    const col = index % columns;
-    const row = Math.floor(index / columns);
-    positions[person.id] = { x: 120 + col * 220, y: 120 + row * 180 };
-  });
-
-  const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  getTreeRelationships().forEach((link) => {
-    const from = getPersonById(link.personA);
-    const to = getPersonById(link.personB);
-    if (!from || !to) return;
-    const p1 = positions[from.id];
-    const p2 = positions[to.id];
-    if (!p1 || !p2) return;
-
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', p1.x + 70);
-    line.setAttribute('y1', p1.y + 34);
-    line.setAttribute('x2', p2.x + 70);
-    line.setAttribute('y2', p2.y + 34);
-    line.setAttribute('class', `edge-line ${link.type === 'spouseOf' ? 'spouse' : 'parent'}`);
-    group.appendChild(line);
-  });
-
-  people.forEach((person) => {
-    const pos = positions[person.id];
-    const card = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    rect.setAttribute('x', pos.x);
-    rect.setAttribute('y', pos.y);
-    rect.setAttribute('rx', 18);
-    rect.setAttribute('ry', 18);
-    rect.setAttribute('width', 140);
-    rect.setAttribute('height', 68);
-    rect.setAttribute('fill', person.color || '#ffffff');
-    rect.setAttribute('stroke', selectedPersonId === person.id ? '#1d5c49' : 'rgba(18,35,27,0.15)');
-    rect.setAttribute('stroke-width', selectedPersonId === person.id ? '2.5' : '1.2');
-    rect.style.cursor = 'pointer';
-    rect.addEventListener('click', () => {
-      selectedPersonId = person.id;
-      renderFamilyApp();
-    });
-
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', pos.x + 26);
-    circle.setAttribute('cy', pos.y + 34);
-    circle.setAttribute('r', 16);
-    circle.setAttribute('fill', '#dfe9df');
-    circle.setAttribute('stroke', '#6c8d78');
-
-    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    label.setAttribute('x', pos.x + 52);
-    label.setAttribute('y', pos.y + 26);
-    label.setAttribute('class', 'node-label');
-    label.textContent = `${person.firstName || ''} ${person.lastName || ''}`.trim() || 'Persona';
-
-    const sub = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    sub.setAttribute('x', pos.x + 52);
-    sub.setAttribute('y', pos.y + 44);
-    sub.setAttribute('class', 'node-sub');
-    sub.textContent = person.place || 'Senza luogo';
-
-    const initials = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    initials.setAttribute('x', pos.x + 26);
-    initials.setAttribute('y', pos.y + 39);
-    initials.setAttribute('text-anchor', 'middle');
-    initials.setAttribute('font-size', '16');
-    initials.setAttribute('font-weight', '700');
-    initials.setAttribute('fill', '#18342c');
-    initials.textContent = (person.firstName || 'P').charAt(0).toUpperCase();
-
-    card.appendChild(rect);
-    card.appendChild(circle);
-    card.appendChild(initials);
-    card.appendChild(label);
-    card.appendChild(sub);
-    group.appendChild(card);
-  });
-
-  svg.appendChild(group);
+  const next = phases.findIndex((phase, index) => !phase.tasks.every((_, taskIndex) => completedForPhase(index).includes(taskIndex)));
+  const nextIndex = next === -1 ? phases.length - 1 : next;
+  document.querySelector(".step-index").innerHTML = `${String(nextIndex + 1).padStart(2, "0")} <span>/ 06</span>`;
+  document.querySelector("#next-title").textContent = next === -1 ? "Percorso completato" : phases[nextIndex].heading;
+  document.querySelector("#next-description").textContent = next === -1
+    ? "Hai spuntato tutte le checklist di questa demo."
+    : phases[nextIndex].tasks.find((_, taskIndex) => !completedForPhase(nextIndex).includes(taskIndex))?.title ?? phases[nextIndex].intro;
+  document.querySelector("#next-action").innerHTML = `${next === -1 ? "Rivedi la checklist" : "Apri la checklist"} <span aria-hidden="true">→</span>`;
+  document.querySelector("#next-action").dataset.phase = String(nextIndex);
+  document.querySelector("#continue-button").innerHTML = `${next === -1 ? "Rivedi il percorso" : "Continua il percorso"} <span aria-hidden="true">→</span>`;
+  document.querySelector("#continue-button").dataset.phase = String(nextIndex);
 }
 
-function openModal() {
-  const modal = document.getElementById('modal');
-  if (modal) {
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-  }
-}
-
-function closeModal() {
-  const modal = document.getElementById('modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-  const modalBody = document.getElementById('modal-body');
-  if (modalBody) modalBody.innerHTML = '';
-}
-
-function openPersonModal(personId = null) {
-  const modalTitle = document.getElementById('modal-title');
-  const modalBody = document.getElementById('modal-body');
-  if (!modalTitle || !modalBody) return;
-  const person = personId ? getPersonById(personId) : null;
-  modalTitle.textContent = person ? 'Modifica persona' : 'Nuova persona';
-  modalBody.innerHTML = `
-    <form id="person-form">
-      <div class="form-grid">
-        <label class="form-field"><span>Nome</span><input name="firstName" value="${escapeHtml(person?.firstName || '')}" required /></label>
-        <label class="form-field"><span>Cognome</span><input name="lastName" value="${escapeHtml(person?.lastName || '')}" /></label>
-        <label class="form-field"><span>Data nascita</span><input type="date" name="birthDate" value="${escapeHtml(person?.birthDate || '')}" /></label>
-        <label class="form-field"><span>Data morte</span><input type="date" name="deathDate" value="${escapeHtml(person?.deathDate || '')}" /></label>
-        <label class="form-field"><span>Genere</span><select name="gender"><option value="Maschio" ${person?.gender === 'Maschio' ? 'selected' : ''}>Maschio</option><option value="Femmina" ${person?.gender === 'Femmina' ? 'selected' : ''}>Femmina</option><option value="Altro" ${person?.gender === 'Altro' ? 'selected' : ''}>Altro</option></select></label>
-        <label class="form-field"><span>Luogo</span><input name="place" value="${escapeHtml(person?.place || '')}" /></label>
-      </div>
-      <label class="form-field"><span>Note</span><textarea name="notes" rows="3">${escapeHtml(person?.notes || '')}</textarea></label>
-      <label class="form-field"><span>Foto</span><input type="file" name="photo" accept="image/*" /></label>
-      ${person?.photo ? `<img class="image-preview" src="${person.photo}" alt="Anteprima foto" />` : ''}
-      <div class="form-actions">
-        <button type="button" class="button secondary close-modal-button">Annulla</button>
-        <button type="submit" class="button button-primary">Salva</button>
-      </div>
-    </form>
-  `;
-
-  modalBody.querySelector('.close-modal-button').addEventListener('click', closeModal);
-  modalBody.querySelector('#person-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const form = new FormData(event.target);
-    const firstName = String(form.get('firstName') || '').trim();
-    const lastName = String(form.get('lastName') || '').trim();
-    const birthDate = String(form.get('birthDate') || '');
-    const deathDate = String(form.get('deathDate') || '');
-    const gender = String(form.get('gender') || 'Altro');
-    const place = String(form.get('place') || '').trim();
-    const notes = String(form.get('notes') || '').trim();
-    const file = form.get('photo');
-    const photo = file && file.name ? await fileToDataUrl(file) : person?.photo || '';
-
-  if (!firstName && !lastName) {
-    alert('Inserisci almeno un nome o un cognome per salvare la persona.');
-    return;
-  }
-
-  if (person) {
-    person.firstName = firstName;
-    person.lastName = lastName;
-    person.birthDate = birthDate;
-    person.deathDate = deathDate;
-    person.gender = gender;
-    person.place = place;
-    person.notes = notes;
-    person.photo = photo;
-  } else {
-    const newPerson = { id: `person-${Date.now()}`, treeId: state.treeId, firstName, lastName, birthDate, deathDate, gender, place, notes, photo, color: randomColor() };
-    state.people.push(newPerson);
-    selectedPersonId = newPerson.id;
-  }
-
-  saveFamilyState();
-  closeModal();
-  renderFamilyApp();
-  });
-
-  openModal();
-}
-
-function openRelationModal(personId) {
-  const modalTitle = document.getElementById('modal-title');
-  const modalBody = document.getElementById('modal-body');
-  if (!modalTitle || !modalBody) return;
-
-  const others = getTreePeople().filter((person) => person.id !== personId);
-  if (!others.length) {
-    modalTitle.textContent = 'Collega persona';
-    modalBody.innerHTML = '<p>Prima aggiungi un’altra persona nel tuo albero.</p><div class="form-actions"><button type="button" class="button secondary close-modal-button">Chiudi</button></div>';
-    modalBody.querySelector('.close-modal-button').addEventListener('click', closeModal);
-    openModal();
-    return;
-  }
-
-  modalTitle.textContent = 'Collega persona';
-  modalBody.innerHTML = `
-    <form id="relation-form">
-      <label class="form-field"><span>Persona da collegare</span>
-        <select name="otherPerson" required>
-          ${others.map((person) => `<option value="${person.id}">${escapeHtml(`${person.firstName || ''} ${person.lastName || ''}`.trim() || 'Persona')}</option>`).join('')}
-        </select>
-      </label>
-      <label class="form-field"><span>Tipo di relazione</span>
-        <select name="type" required>
-          <option value="parentOf">Genitore di</option>
-          <option value="spouseOf">Coniuge di</option>
-          <option value="siblingOf">Fratello/sorella di</option>
-        </select>
-      </label>
-      <div class="form-actions">
-        <button type="button" class="button secondary close-modal-button">Annulla</button>
-        <button type="submit" class="button button-primary">Salva</button>
-      </div>
-    </form>
-  `;
-
-  modalBody.querySelector('.close-modal-button').addEventListener('click', closeModal);
-  modalBody.querySelector('#relation-form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const form = new FormData(event.target);
-    const otherId = String(form.get('otherPerson'));
-    const type = String(form.get('type'));
-    const exists = state.relationships.some((link) => link.treeId === state.treeId && link.type === type && ((link.personA === personId && link.personB === otherId) || (link.personA === otherId && link.personB === personId)));
-    if (!exists) {
-      state.relationships.push({ id: `rel-${Date.now()}`, treeId: state.treeId, type, personA: personId, personB: otherId });
-    }
-    saveFamilyState();
-    closeModal();
-    renderFamilyApp();
-  });
-
-  openModal();
-}
-
-function renderFamilyApp() {
-  renderTreeSummary();
-  renderTreeList();
-  renderPeopleList();
+function render() {
+  renderPhases();
   renderDetail();
-  renderSearchResults();
-  renderGraph();
-  const statusBadge = document.getElementById('status-badge');
-  if (statusBadge) {
-    statusBadge.textContent = 'Salvato localmente';
-  }
+  renderProgress();
 }
 
-function ensureTreeHasPeople() {
-  if (!state.trees.length) {
-    const fallbackTree = { id: `tree-${Date.now()}`, name: 'Albero famiglia', description: 'Nuovo albero locale' };
-    state.trees.push(fallbackTree);
-    state.treeId = fallbackTree.id;
-  }
-  if (!getTreePeople().length && state.people.length) {
-    state.people.forEach((person) => {
-      if (!person.treeId) person.treeId = state.treeId;
-    });
-  }
+function setActivePhase(index, focusTab = false) {
+  activePhase = Math.max(0, Math.min(phases.length - 1, index));
+  render();
+  if (focusTab) document.querySelector(`#phase-tab-${activePhase}`).focus();
 }
 
-async function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result || ''));
-    reader.onerror = () => reject(new Error('Errore nel caricamento di una foto'));
-    reader.readAsDataURL(file);
-  });
-}
-
-function initializeFamilyApp() {
-  ensureTreeHasPeople();
-
-  const addPersonButton = document.getElementById('add-person-button');
-  if (addPersonButton) addPersonButton.addEventListener('click', () => openPersonModal());
-
-  const newTreeButton = document.getElementById('new-tree-button');
-  if (newTreeButton) newTreeButton.addEventListener('click', () => {
-    const id = `tree-${Date.now()}`;
-    state.trees.push({ id, name: `Albero ${state.trees.length + 1}`, description: 'Nuovo albero familiare' });
-    state.treeId = id;
-    saveFamilyState();
-    renderFamilyApp();
-  });
-
-  const importInput = document.getElementById('file-import-input');
-  const importButton = document.getElementById('import-button');
-  if (importButton) importButton.addEventListener('click', () => importInput?.click());
-  if (importInput) {
-    importInput.addEventListener('change', async (event) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      try {
-        const raw = await file.text();
-        const parsed = JSON.parse(raw);
-        if (!parsed || !parsed.trees) throw new Error('Formato invalido');
-        state = parsed;
-        selectedPersonId = getTreePeople()[0]?.id ?? null;
-        saveFamilyState();
-        renderFamilyApp();
-      } catch {
-        alert('Impossibile importare il file: formato non valido.');
-      }
-      event.target.value = '';
-    });
-  }
-
-  document.getElementById('export-button')?.addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `albero-famiglia-${new Date().toISOString().slice(0, 10)}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  });
-
-  const search = document.getElementById('person-search');
-  if (search) search.addEventListener('input', renderSearchResults);
-
-  document.querySelector('[data-zoom="in"]')?.addEventListener('click', () => {
-    const svg = document.getElementById('family-graph');
-    if (!svg) return;
-    const scale = Number.parseFloat(svg.dataset.scale || '1');
-    const next = Math.min(scale + 0.12, 1.6);
-    svg.dataset.scale = String(next);
-    svg.style.transform = `scale(${next})`;
-    svg.style.transformOrigin = 'center center';
-  });
-
-  document.querySelector('[data-zoom="out"]')?.addEventListener('click', () => {
-    const svg = document.getElementById('family-graph');
-    if (!svg) return;
-    const scale = Number.parseFloat(svg.dataset.scale || '1');
-    const next = Math.max(scale - 0.12, 0.7);
-    svg.dataset.scale = String(next);
-    svg.style.transform = `scale(${next})`;
-    svg.style.transformOrigin = 'center center';
-  });
-
-  document.getElementById('center-tree-button')?.addEventListener('click', renderGraph);
-  document.querySelector('.close-modal')?.addEventListener('click', closeModal);
-  document.getElementById('modal')?.addEventListener('click', (event) => {
-    if (event.target === event.currentTarget) closeModal();
-  });
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  }
-
-  window.addEventListener('beforeinstallprompt', (event) => {
-    installPrompt = event;
-    const installButton = document.getElementById('install-button');
-    if (installButton) installButton.hidden = false;
-  });
-
-  document.getElementById('install-button')?.addEventListener('click', async () => {
-    if (!installPrompt) return;
-    installPrompt.prompt();
-    await installPrompt.userChoice;
-    const installButton = document.getElementById('install-button');
-    if (installButton) installButton.hidden = true;
-  });
-
-  renderFamilyApp();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  initializeLegacyDemo();
-  initializeFamilyApp();
+phaseList.addEventListener("click", event => {
+  const button = event.target.closest("[data-phase]");
+  if (button) setActivePhase(Number(button.dataset.phase));
 });
+
+phaseList.addEventListener("keydown", event => {
+  if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const nextIndex = event.key === "Home" ? 0
+    : event.key === "End" ? phases.length - 1
+      : activePhase + (event.key === "ArrowRight" ? 1 : -1);
+  setActivePhase((nextIndex + phases.length) % phases.length, true);
+});
+
+phaseDetail.addEventListener("change", event => {
+  const checkbox = event.target.closest("[data-task]");
+  if (!checkbox) return;
+  const taskIndex = Number(checkbox.dataset.task);
+  const phaseProgress = new Set(completedForPhase(activePhase));
+  if (checkbox.checked) phaseProgress.add(taskIndex);
+  else phaseProgress.delete(taskIndex);
+  completed[activePhase] = [...phaseProgress].sort((a, b) => a - b);
+  saveProgress();
+  render();
+});
+
+document.querySelector("#continue-button").addEventListener("click", event => {
+  setActivePhase(Number(event.currentTarget.dataset.phase));
+  document.querySelector("#percorso").scrollIntoView({ behavior: "smooth" });
+});
+
+document.querySelector("#next-action").addEventListener("click", event => {
+  setActivePhase(Number(event.currentTarget.dataset.phase));
+  document.querySelector("#percorso").scrollIntoView({ behavior: "smooth" });
+});
+
+document.querySelector("#reset-button").addEventListener("click", () => {
+  completed = {};
+  saveProgress();
+  render();
+});
+
+function todayAsLocalDate() {
+  const now = new Date();
+  const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return localDate.toISOString().slice(0, 10);
+}
+
+document.querySelector("#diary-date").value = todayAsLocalDate();
+
+document.querySelector("#diary-form").addEventListener("submit", event => {
+  event.preventDefault();
+  if (diaryEntries.length >= 250) {
+    setDiaryStatus("Hai raggiunto il limite di 250 note per questa demo. Esporta il diario prima di rimuovere le note che non ti servono.", true);
+    return;
+  }
+
+  const form = event.currentTarget;
+  const formData = new FormData(form);
+  const entry = {
+    id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+    date: String(formData.get("date")),
+    category: String(formData.get("category")),
+    title: String(formData.get("title")).trim(),
+    description: String(formData.get("description")).trim()
+  };
+  if (!entry.date || !Object.hasOwn(diaryCategories, entry.category) || !entry.title || !entry.description) {
+    setDiaryStatus("Controlla i campi: data, tipo di nota, titolo e descrizione sono obbligatori.", true);
+    return;
+  }
+
+  diaryEntries.push(entry);
+  const saved = saveDiary();
+  renderDiary();
+  if (saved) {
+    form.reset();
+    document.querySelector("#diary-date").value = todayAsLocalDate();
+    document.querySelector("#diary-category").value = "decisione";
+    document.querySelector("#diary-title").focus();
+    setDiaryStatus("Nota aggiunta al diario del browser.");
+  }
+});
+
+document.querySelector("#diary-entries").addEventListener("click", event => {
+  const removeButton = event.target.closest("[data-remove-entry]");
+  if (!removeButton) return;
+  const previousEntries = diaryEntries;
+  diaryEntries = diaryEntries.filter(entry => entry.id !== removeButton.dataset.removeEntry);
+  if (!saveDiary()) {
+    diaryEntries = previousEntries;
+  } else {
+    setDiaryStatus("Nota eliminata.");
+  }
+  renderDiary();
+});
+
+document.querySelector("#export-diary").addEventListener("click", () => {
+  if (diaryEntries.length === 0) {
+    setDiaryStatus("Il diario è vuoto: aggiungi almeno una nota prima di esportarlo.", true);
+    return;
+  }
+  const data = {
+    exportedAt: new Date().toISOString(),
+    note: "Esportazione locale del diario Cantiere Chiaro.",
+    entries: [...diaryEntries].sort((a, b) => a.date.localeCompare(b.date))
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `diario-lavori-${todayAsLocalDate()}.json`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setDiaryStatus("Esportazione completata. Conserva il file in un luogo sicuro.");
+});
+
+document.querySelector("#clear-diary").addEventListener("click", () => {
+  if (diaryEntries.length === 0) {
+    setDiaryStatus("Il diario è già vuoto.");
+    return;
+  }
+  if (!window.confirm("Vuoi eliminare tutte le note del diario salvate in questo browser? Questa operazione non si può annullare.")) return;
+  const previousEntries = diaryEntries;
+  diaryEntries = [];
+  if (!saveDiary()) {
+    diaryEntries = previousEntries;
+  } else {
+    setDiaryStatus("Diario svuotato.");
+  }
+  renderDiary();
+});
+
+function openHelp() {
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+  backdrop.hidden = false;
+  document.querySelector("#close-dialog").focus();
+}
+
+function closeHelp() {
+  if (typeof dialog.close === "function" && dialog.open) dialog.close();
+  else dialog.removeAttribute("open");
+  backdrop.hidden = true;
+  document.querySelector("#help-button").focus();
+}
+
+document.querySelector("#help-button").addEventListener("click", openHelp);
+document.querySelector("#footer-help").addEventListener("click", event => {
+  event.preventDefault();
+  openHelp();
+});
+document.querySelector("#close-dialog").addEventListener("click", closeHelp);
+document.querySelector("#done-dialog").addEventListener("click", closeHelp);
+backdrop.addEventListener("click", closeHelp);
+dialog.addEventListener("cancel", () => {
+  backdrop.hidden = true;
+  document.querySelector("#help-button").focus();
+});
+dialog.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeHelp();
+  }
+});
+dialog.addEventListener("click", event => {
+  if (event.target === dialog) closeHelp();
+});
+
+render();
+renderDiary();

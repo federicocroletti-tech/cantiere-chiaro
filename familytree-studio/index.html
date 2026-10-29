@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#4d6f5f">
+    <meta name="description" content="Crea e conserva il tuo albero genealogico in un archivio locale.">
+    <title>FamilyTree Studio</title>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand-block" href="./" aria-label="FamilyTree Studio, home">
+          <span class="brand-mark" aria-hidden="true">F</span>
+          <span>
+            <span class="brand-name">FamilyTree</span>
+            <span class="brand-subtitle">Studio locale</span>
+          </span>
+        </a>
+        <div class="topbar-actions">
+          <button type="button" class="button secondary" id="new-tree-button">Nuovo albero</button>
+          <button type="button" class="button secondary" id="import-button">Importa</button>
+          <button type="button" class="button secondary" id="export-button">Backup</button>
+          <button type="button" class="button install" id="install-button" hidden>Installa app</button>
+        </div>
+      </header>
+
+      <main class="main-layout">
+        <section class="intro">
+          <p class="eyebrow">IL TUO ARCHIVIO FAMILIARE</p>
+          <h1>La storia di famiglia, <span>un legame alla volta.</span></h1>
+          <p>I dati restano in questo browser. Esporta un backup per conservarne una copia.</p>
+        </section>
+
+        <section class="family-app" aria-label="Albero genealogico">
+          <aside class="family-panel">
+            <section class="panel-box" aria-label="Alberi familiari">
+              <div class="panel-row">
+                <h2>I miei alberi</h2>
+                <span id="tree-count" class="section-hint">0 alberi</span>
+              </div>
+              <div id="tree-list" class="tree-list" aria-live="polite"></div>
+            </section>
+
+            <section class="panel-box" aria-label="Persone">
+              <div class="panel-row">
+                <h2>Persone</h2>
+                <button type="button" class="button tiny" id="add-person-button">Aggiungi</button>
+              </div>
+              <div id="people-list" class="people-list" aria-live="polite"></div>
+            </section>
+
+            <section class="panel-box">
+              <label class="field-label" for="person-search">Cerca persona</label>
+              <input id="person-search" class="text-input" type="search" placeholder="Nome, cognome o luogo">
+              <div id="search-results" class="search-results" aria-live="polite"></div>
+            </section>
+          </aside>
+
+          <section class="family-graph-wrap" aria-label="Grafico familiare">
+            <div class="graph-toolbar">
+              <div class="toolbar-left">
+                <button type="button" class="icon-button" data-zoom="in" aria-label="Aumenta zoom">+</button>
+                <button type="button" class="icon-button" data-zoom="out" aria-label="Riduci zoom">−</button>
+                <button type="button" class="button tiny" id="center-tree-button">Centra</button>
+              </div>
+              <span id="status-badge" class="status-badge" role="status">Salvato localmente</span>
+            </div>
+            <div class="graph-stage">
+              <svg id="family-graph" viewBox="0 0 1200 800" role="img" aria-label="Grafico dell'albero genealogico"></svg>
+            </div>
+          </section>
+
+          <aside id="person-detail" class="person-detail panel-box" aria-live="polite"></aside>
+        </section>
+      </main>
+    </div>
+
+    <div id="modal" class="modal hidden" aria-hidden="true">
+      <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <header class="modal-header">
+          <h2 id="modal-title">Dettagli</h2>
+          <button type="button" class="close-modal" aria-label="Chiudi finestra">×</button>
+        </header>
+        <div id="modal-body"></div>
+      </section>
+    </div>
+
+    <input id="file-import-input" type="file" accept="application/json,.json" hidden>
+  </body>
+</html>
