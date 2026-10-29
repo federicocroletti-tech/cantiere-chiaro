@@ -8,7 +8,7 @@ test('la landing page mostra il percorso e le fonti di supporto', async ({ page 
   await expect(page.locator('#fonti')).toContainText('FONTI E VERIFICA');
   await expect(page.locator('#fonti')).toContainText("Testo Unico dell'Edilizia");
   await expect(page.locator('#fonti a[href^="https://www.normattiva.it/"]')).toHaveAttribute('target', '_blank');
-  await expect(page.getByRole('link', { name: 'Apri FamilyTree Studio' })).toHaveAttribute('href', './familytree-studio/');
+  await expect(page.getByRole('link', { name: 'Apri FamilyTree Studio' })).toHaveAttribute('href', 'https://federicocroletti-tech.github.io/familytree-studio/');
 
   await page.getByRole('button', { name: /serve una mano\?/i }).click();
   await expect(page.locator('#sicurezza')).toBeVisible();
