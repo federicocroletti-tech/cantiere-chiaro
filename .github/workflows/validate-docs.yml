@@ -1,0 +1,21 @@
+name: Validate knowledge base
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Documentation checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate Markdown links and landing-page accessibility
+        run: python3 tests/check_docs.py
