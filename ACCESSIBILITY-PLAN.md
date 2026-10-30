@@ -17,6 +17,8 @@
 
 **Automatica:** lint/accessibility scan in CI sulle pagine renderizzate; controllo link e HTML quando disponibili.
 
+Il controllo automatico iniziale verifica i link Markdown relativi e alcuni requisiti strutturali della landing page. Non esegue un audit WCAG, non verifica i link esterni e non sostituisce le prove manuali. I file Markdown attuali non usano frontmatter YAML; non esiste quindi uno schema di frontmatter da validare.
+
 **Manuale:** tastiera, zoom/reflow, contrasto, screen reader almeno su browser/piattaforme selezionati, form ed errori, flussi critici da mobile.
 **Utenti:** raccogliere feedback accessibile e non identificativo quando il progetto è disponibile.
 
