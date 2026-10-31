@@ -1,4 +1,4 @@
-name: Deploy static site to GitHub Pages
+name: Deploy Cantiere Chiaro to GitHub Pages
 
 on:
   push:
@@ -42,6 +42,8 @@ jobs:
         run: |
           mkdir site
           cp index.html styles.css app.js site/
+          mkdir -p site/manuali
+          cp -R manuali/. site/manuali/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:

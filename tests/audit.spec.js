@@ -5,6 +5,7 @@ test('la landing page mostra il percorso e le fonti di supporto', async ({ page 
 
   await expect(page).toHaveTitle(/Cantiere Chiaro/i);
   await expect(page.getByRole('heading', { name: /Ristrutturare, con più/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Manuali e moduli' })).toHaveAttribute('href', './manuali/');
   await expect(page.locator('#fonti')).toContainText('FONTI E VERIFICA');
   await expect(page.locator('#fonti')).toContainText("Testo Unico dell'Edilizia");
   await expect(page.locator('#fonti a[href^="https://www.normattiva.it/"]')).toHaveAttribute('target', '_blank');
@@ -12,6 +13,21 @@ test('la landing page mostra il percorso e le fonti di supporto', async ({ page 
   await expect(page.locator('#sicurezza')).toBeVisible();
   await page.locator('#close-dialog').click();
   await expect(page.locator('#sicurezza')).not.toBeVisible();
+});
+
+test('la raccolta di manuali è accessibile separatamente dall’app', async ({ page }) => {
+  await page.goto('/manuali/');
+
+  await expect(page).toHaveTitle(/Manuali e moduli \| Cantiere Chiaro/i);
+  await expect(page.getByRole('heading', { name: 'Manuali e moduli' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Leggi il manuale completo su GitHub' })).toHaveAttribute(
+    'href',
+    'https://github.com/federicocroletti-tech/cantiere-chiaro/blob/main/manuali/percorso-base.md'
+  );
+  await expect(page.getByRole('link', { name: 'Apri e copia i moduli su GitHub' })).toHaveAttribute(
+    'href',
+    'https://github.com/federicocroletti-tech/cantiere-chiaro/blob/main/manuali/moduli.md'
+  );
 });
 
 test('il pulsante prossimo passo apre la fase successiva', async ({ page }) => {
