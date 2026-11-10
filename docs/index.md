@@ -16,6 +16,13 @@ Knowledge base italiana per orientarsi nei lavori di casa e organizzare informaz
 - [Dossier di ripartenza](./ripartenza/README.md): inventario, conservazione,
   architettura e proposte per la knowledge base e l'applicazione futura.
 
+## Contenuti in lavorazione
+
+Non sono procedure verificate o modelli pronti all'uso.
+
+- [Richiesta di chiarimenti o documenti all'impresa](./procedure/documentazione/richiesta-chiarimenti-documenti-impresa.md):
+    bozza pilota organizzativa, soggetta a revisione e approvazione.
+
 ## Come leggere i contenuti
 
 I materiali hanno finalità informative e organizzative. Non sostituiscono consulenza legale, tecnica, fiscale, contabile o amministrativa e non garantiscono l'applicabilità a un caso concreto. Controllare fonti, territorio, data e stato di verifica; chiedere supporto qualificato quando necessario.
