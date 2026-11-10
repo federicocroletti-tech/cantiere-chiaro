@@ -11,6 +11,11 @@ Knowledge base italiana per orientarsi nei lavori di casa e organizzare informaz
 - [Quando rivolgersi a un professionista](./quando-rivolgersi-a-un-professionista.md)
 - [Disclaimer e limiti](./disclaimer.md)
 
+## Progetto e manutenzione
+
+- [Dossier di ripartenza](./ripartenza/README.md): inventario, conservazione,
+  architettura e proposte per la knowledge base e l'applicazione futura.
+
 ## Come leggere i contenuti
 
 I materiali hanno finalità informative e organizzative. Non sostituiscono consulenza legale, tecnica, fiscale, contabile o amministrativa e non garantiscono l'applicabilità a un caso concreto. Controllare fonti, territorio, data e stato di verifica; chiedere supporto qualificato quando necessario.

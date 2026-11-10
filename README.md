@@ -13,6 +13,13 @@ Knowledge base italiana per orientarsi nei lavori edili e impiantistici e organi
 
 La relativa applicazione è mantenuta separatamente in [cantiere-chiaro-app](https://github.com/federicocroletti-tech/cantiere-chiaro-app). I contenuti documentali sono la fonte canonica; l'app non deve duplicarli manualmente.
 
+## Ricognizione e piano di evoluzione
+
+Il [dossier di ripartenza](./docs/ripartenza/README.md) raccoglie inventario,
+backup verificati, materiali storici recuperati, architettura proposta,
+progettazione della knowledge base e piano di migrazione. Le proposte non
+equivalgono a procedure verificate o modifiche applicative gia approvate.
+
 ## Avvertenza
 
 I materiali sono informativi e organizzativi. Non costituiscono consulenza legale, tecnica, fiscale, contabile o amministrativa e non sostituiscono professionisti o enti competenti. Le informazioni possono non essere aggiornate o applicabili al caso concreto: verificare fonti, territorio, data e necessità di assistenza qualificata.

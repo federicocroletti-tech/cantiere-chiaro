@@ -1,0 +1,11 @@
+unit: portale-documentale
+side_effects:
+  - source_loc: cantiere-chiaro/index.html:90
+    effect: Navigazione verso indice, percorso, moduli, fonti e stato su GitHub.
+    must_preserve: true
+branches: []
+error_paths: []
+notes: Nessuna gestione di URL esterni non raggiungibili nel codice osservato.
+concurrency:
+  model: sync
+  tx_boundary: null

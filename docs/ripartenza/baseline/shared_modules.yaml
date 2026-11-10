@@ -1,0 +1,5 @@
+modules: []
+notes: >-
+  Nessun modulo di codice importato da piu unita rilevato. app.js e monolitico
+  ma appartiene a una sola unita di pagina. Le copie identiche nei due checkout
+  sono duplicati fisici, non un modulo runtime condiviso.

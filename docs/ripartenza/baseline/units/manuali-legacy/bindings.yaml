@@ -1,0 +1,8 @@
+unit: manuali-legacy
+bindings:
+  - type: convention
+    name: Directory manuali con index.html
+    source_loc: cantiere-chiaro-app/manuali/index.html:1
+    target: Navigazione relativa dall'app e link esterni ai manuali
+    must_appear_in_target: true
+runtime_config: []

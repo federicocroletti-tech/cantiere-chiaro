@@ -1,0 +1,24 @@
+unit: manuali-legacy
+side_effects:
+  - source_loc: CantiereFacile/manuali/index.html:56
+    effect: Collega il percorso a docs/orientamento/percorso-base.md del documentale.
+    must_preserve: true
+  - source_loc: CantiereFacile/manuali/index.html:64
+    effect: Collega i moduli a templates/moduli.md del documentale.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/manuali/index.html:56
+    effect: Nella linea precedente apre il manuale al percorso storico main/manuali/percorso-base.md.
+    must_preserve: false
+  - source_loc: cantiere-chiaro-app/manuali/index.html:64
+    effect: Nella linea precedente apre i moduli al percorso storico main/manuali/moduli.md.
+    must_preserve: false
+branches: []
+error_paths: []
+notes: >-
+  Il nome legacy identifica il percorso pubblico storico, non una richiesta
+  di ripristinare la vecchia pagina. La versione dedicata in CantiereFacile
+  ha gia URL corretti verso docs/orientamento e templates.
+  Preservare questa correzione, non reintrodurre il comportamento legacy.
+concurrency:
+  model: sync
+  tx_boundary: null

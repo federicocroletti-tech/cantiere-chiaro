@@ -1,0 +1,25 @@
+seams:
+  - id: cantiere-chiaro/README.md:14
+    description: Separazione dichiarata fra originali documentali e applicazione.
+    source: declared
+    cut_between:
+      migrated_side: portale-documentale
+      frozen_side: spazio-lavori
+    protocol_shift: null
+    frozen_side_rule: >-
+      L'applicazione e la linea precedente non vanno modificate o ricompilate
+      per questa consegna di analisi. Nessuna cancellazione di manuali o dati.
+    bridge_points:
+      - at: CantiereFacile/manuali/index.html:56
+        from_form: Link a Markdown canonici nel documentale.
+        to_form: Link agli stessi ID canonici dopo eventuale riorganizzazione.
+        mapping_rule: >-
+          percorso-base-lavori-casa resta associato al percorso di orientamento;
+          moduli-pratici resta indice dei modelli anche se suddivisi. Conservare
+          alias dei vecchi percorsi. Nessuna modifica applicativa in questa fase.
+        edge_cases:
+          - URL storico assente richiede alias o pagina ponte, non cancellazione cieca.
+          - Contenuto non verificato resta etichettato e non diventa istruzione operativa.
+        idempotency_retry: Navigazione di sola lettura; nessuna scrittura o invio di atti.
+        fallback: Mostrare limite di disponibilita; non sostituire con contenuto inventato.
+        must_preserve: true

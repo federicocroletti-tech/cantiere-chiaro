@@ -1,0 +1,8 @@
+unit: portale-documentale
+bindings:
+  - type: convention
+    name: index.html come ingresso statico documentale
+    source_loc: cantiere-chiaro/index.html:1
+    target: Documento HTML con collegamenti ai Markdown
+    must_appear_in_target: true
+runtime_config: []
