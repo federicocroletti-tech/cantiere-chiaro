@@ -1,0 +1,74 @@
+contracts:
+  - name: progresso-locale-v1
+    unit: spazio-lavori
+    type: sdk
+    stability: must_preserve
+    source_loc: CantiereFacile/app.js:111
+    contract:
+      method: localStorage.getItem e setItem
+      path: cantiere-chiaro-demo-v1
+      request: "JSON object: chiave indice fase -> array di indici attivita completate"
+      response: Oggetto salvato o oggetto vuoto se lettura fallita.
+      error: Scrittura fallita segnala soltanto console nella versione attuale.
+      auth: Nessuna; accesso limitato alla stessa origine browser.
+    target_contract:
+      method: Leggere lo schema v1 senza sovrascriverlo durante una futura migrazione.
+      notes: Associare indici legacy a ID stabili; il nuovo origin richiede export/import.
+    semantic_divergence:
+      - field: indici di fase e attivita
+        issue: Riordinare array editoriali puo assegnare spunte ad attivita diverse.
+        source_loc: CantiereFacile/app.js:213
+  - name: diario-locale-v1
+    unit: spazio-lavori
+    type: sdk
+    stability: must_preserve
+    source_loc: CantiereFacile/app.js:129
+    contract:
+      method: localStorage.getItem e setItem
+      path: cantiere-chiaro-diario-v1
+      request: "JSON array di {id, date, category, title, description}, campi stringa"
+      response: Note filtrate dai controlli esistenti o array vuoto in errore.
+      error: Messaggio visibile in errore di scrittura; console per lettura.
+      auth: Nessuna; stesso profilo e stessa origine.
+    target_contract:
+      method: Importare v1 con validazione, anteprima e conservazione dell'originale.
+      notes: Non eliminare righe non valide in silenzio durante una migrazione.
+    semantic_divergence:
+      - field: date
+        issue: Data evento YYYY-MM-DD dichiarata; non timestamp certificato o data certa.
+        source_loc: CantiereFacile/app.js:137
+  - name: export-diario-json
+    unit: spazio-lavori
+    type: file
+    stability: must_preserve
+    source_loc: CantiereFacile/app.js:388
+    contract:
+      method: Download Blob JSON UTF-8
+      path: diario-lavori-YYYY-MM-DD.json
+      request: Diario locale non vuoto.
+      response: "{exportedAt: string ISO, note: string, entries: array di note ordinate per date}"
+      error: Diario vuoto mostra stato, nessun download.
+      auth: Nessuna trasmissione remota nel gestore osservato.
+    target_contract:
+      method: Mantenere leggibilita del JSON legacy e introdurre versioni future esplicite.
+      notes: Il file non contiene progresso, allegati o schema_version.
+    semantic_divergence:
+      - field: exportedAt
+        issue: Data di esportazione del browser, non data dell'evento o certificazione.
+        source_loc: CantiereFacile/app.js:395
+  - name: collegamenti-documentali
+    unit: manuali-legacy
+    type: file
+    stability: must_preserve
+    source_loc: CantiereFacile/manuali/index.html:56
+    contract:
+      method: Navigazione HTTPS verso file Markdown GitHub
+      path: docs/orientamento/percorso-base.md e templates/moduli.md nel documentale
+      request: Click esplicito del lettore.
+      response: Pagina Markdown della revisione main online.
+      error: Nessun fallback implementato in caso di URL non raggiungibile.
+      auth: Consultazione pubblica prevista, disponibilita online non verificata oggi.
+    target_contract:
+      method: Mantenere accesso al contenuto canonico o alias documentato del suo ID.
+      notes: Non reintrodurre URL main/manuali presenti soltanto nella linea precedente.
+    semantic_divergence: []

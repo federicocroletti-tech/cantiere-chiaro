@@ -1,0 +1,4 @@
+unit: manuali-legacy
+commit: false
+candidate_splits: []
+notes: Pagina ponte semplice; non serve creare un servizio separato.

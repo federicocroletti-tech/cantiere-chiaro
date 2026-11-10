@@ -1,0 +1,30 @@
+unit: spazio-lavori
+bindings:
+  - type: listener
+    name: Tab fasi e checkbox attivita
+    source_loc: cantiere-chiaro-app/app.js:292
+    target: phase-list click/keydown e phase-detail change
+    must_appear_in_target: true
+  - type: listener
+    name: Diario inserimento rimozione export e svuotamento
+    source_loc: cantiere-chiaro-app/app.js:342
+    target: diary-form, diary-entries, export-diary, clear-diary
+    must_appear_in_target: true
+  - type: listener
+    name: Dialogo aiuto e ritorno focus
+    source_loc: cantiere-chiaro-app/app.js:440
+    target: help-button, footer-help, close-dialog, done-dialog, dialog-backdrop
+    must_appear_in_target: true
+runtime_config:
+  - key: cantiere-chiaro-demo-v1
+    source_loc: cantiere-chiaro-app/app.js:94
+    source: code
+    default_value: "{}"
+    must_appear_in_target: true
+    notes: Mantenere leggibilita della chiave legacy fino a migrazione esplicita.
+  - key: cantiere-chiaro-diario-v1
+    source_loc: cantiere-chiaro-app/app.js:95
+    source: code
+    default_value: "[]"
+    must_appear_in_target: true
+    notes: Il nuovo origin non puo accedere automaticamente al vecchio storage.

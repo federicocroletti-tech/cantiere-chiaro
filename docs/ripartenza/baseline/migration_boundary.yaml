@@ -1,0 +1,43 @@
+user_intent:
+  raw_request: Analizzare e preservare prima di scrivere codice; separare knowledge base e applicazione.
+  inferred_acceptance:
+    - Inventario locale completo e backup verificato
+    - Proposta documentata senza perdita di contenuti
+    - Nessuna modifica applicativa prima del piano
+  cleanup_required: false
+strategy: phased
+runtime_reachable:
+  - cantiere-chiaro/index.html
+  - CantiereFacile/index.html
+  - CantiereFacile/app.js
+  - CantiereFacile/styles.css
+  - CantiereFacile/manuali/index.html
+  - cantiere-chiaro-app/index.html
+  - cantiere-chiaro-app/app.js
+  - cantiere-chiaro-app/styles.css
+  - cantiere-chiaro-app/manuali/index.html
+must_rewrite: []
+copy_as_is:
+  - cantiere-chiaro/index.html
+  - CantiereFacile/index.html
+  - CantiereFacile/app.js
+  - CantiereFacile/styles.css
+  - CantiereFacile/manuali/index.html
+  - cantiere-chiaro-app/index.html
+  - cantiere-chiaro-app/app.js
+  - cantiere-chiaro-app/styles.css
+  - cantiere-chiaro-app/manuali/index.html
+legacy_allowed_to_remain:
+  - cantiere-chiaro-app/manuali/percorso-base.md
+  - cantiere-chiaro-app/manuali/moduli.md
+defer_cleanup:
+  - Riconciliare i collegamenti legacy solo dopo approvazione e verifica destinazioni.
+  - Confermare CantiereFacile come copia dedicata; non creare un terzo repository.
+  - Sostituire contenuti hardcoded solo con ID stabili e migrazione dati verificata.
+  - Nessuna eliminazione senza nuovo inventario, backup e approvazione esplicita.
+full_rewrite_reason: null
+implementation_rule: >-
+  Questa consegna modifica solo documentazione. must_rewrite e vuoto perche
+  non e autorizzata una migrazione applicativa in questa fase. Gli anchor
+  identificano evidenze e non sono una lista di file da riscrivere. La presenza
+  di entrambe le linee nell'inventario non implica che vadano entrambe distribuite.

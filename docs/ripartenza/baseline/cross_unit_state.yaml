@@ -1,0 +1,5 @@
+flows: []
+notes: >-
+  Persistenza di progresso e diario letta e scritta soltanto da spazio-lavori.
+  Nessun flusso di stato implicito fra portale, pagina ponte e app osservato.
+  Il futuro pacchetto editoriale e una proposta, non un'integrazione gia presente.

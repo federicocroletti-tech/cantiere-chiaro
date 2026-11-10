@@ -1,0 +1,72 @@
+unit: spazio-lavori
+side_effects:
+  - source_loc: cantiere-chiaro-app/app.js:121
+    effect: Serializza il progresso per indice fase e indice attivita in localStorage.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:153
+    effect: Serializza le note del diario in localStorage per origine browser.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:342
+    effect: Inserisce una nota, aggiorna vista e conteggio; azzera form solo se salvata.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:375
+    effect: Elimina una nota e ripristina lo stato in memoria se il salvataggio fallisce.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:388
+    effect: Scarica un Blob JSON locale con note ordinate per data crescente.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:410
+    effect: Chiede conferma prima di svuotare il diario; ripristina se scrittura fallisce.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:328
+    effect: Azzera soltanto il progresso checklist, non le note.
+    must_preserve: true
+branches:
+  - source_loc: cantiere-chiaro-app/app.js:256
+    condition: Tutte le attivita di una fase o di tutto il percorso risultano spuntate.
+    behavior: Aggiorna percentuale, contatori e prossimo passo; sei fasi e 18 attivita.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:296
+    condition: Frecce, Home o End sulla lista tab.
+    behavior: Navigazione ciclica e gestione focus del tab selezionato.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:342
+    condition: Numero di note almeno 250 o campi obbligatori assenti.
+    behavior: Rifiuta inserimento e mostra messaggio; categorie ammesse predefinite.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:388
+    condition: Diario vuoto al tentativo di export.
+    behavior: Messaggio esplicito senza scaricamento.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:426
+    condition: showModal disponibile o assente.
+    behavior: Dialogo nativo o attributo open; chiusura ripristina focus sull'aiuto.
+    must_preserve: true
+error_paths:
+  - source_loc: cantiere-chiaro-app/app.js:111
+    trigger: JSON del progresso illeggibile o accesso storage fallito.
+    outcome: Avviso console e fallback a oggetto vuoto.
+    contract: Nessuna eccezione propagata durante lettura; dati originari non cancellati.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:129
+    trigger: Diario non array o righe non rispondenti ai controlli attuali.
+    outcome: Fallback vuoto o esclusione righe non valide, avviso console.
+    contract: I controlli attuali non costituiscono validazione completa di data o lunghezze.
+    must_preserve: false
+  - source_loc: cantiere-chiaro-app/app.js:153
+    trigger: Errore di scrittura diario, ad esempio quota storage.
+    outcome: Messaggio visibile e risultato false.
+    contract: Non dichiarare riuscita una scrittura fallita.
+    must_preserve: true
+  - source_loc: cantiere-chiaro-app/app.js:121
+    trigger: Errore di scrittura progresso.
+    outcome: Solo avviso console; lo stato in memoria resta aggiornato.
+    contract: Limite attuale, non requisito da replicare; futuro errore visibile richiesto.
+    must_preserve: false
+concurrency:
+  model: event-loop
+  tx_boundary:
+    source_loc: cantiere-chiaro-app/app.js:153
+    scope: Scrittura sincrona di una chiave localStorage; nessuna transazione fra chiavi.
+    isolation: Nessun coordinamento multi-tab applicativo rilevato.
+    must_preserve: false

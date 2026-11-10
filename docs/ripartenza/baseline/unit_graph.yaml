@@ -1,0 +1,60 @@
+evidence: static-local-2026-11-10
+source_root: C:/Federico/Progetti
+units:
+  - name: portale-documentale
+    trigger: page
+    trigger_detail: GET / del sito documentale; navigazione ai Markdown
+    source_anchors:
+      - path: cantiere-chiaro/index.html
+        line: 1
+      - path: cantiere-chiaro/docs/index.md
+        line: 1
+    exported_signature:
+      - method: Pagina pubblica documentale e collegamenti canonici
+        source_loc: cantiere-chiaro/index.html:90
+        stability: must_preserve
+    dynamic_entrypoints: []
+    depends_on: []
+    shared_refs: []
+  - name: spazio-lavori
+    trigger: page
+    trigger_detail: GET / di CantiereFacile; logica identica alla linea precedente
+    source_anchors:
+      - path: CantiereFacile/index.html
+        line: 1
+      - path: CantiereFacile/app.js
+        line: 1
+      - path: CantiereFacile/styles.css
+        line: 1
+      - path: cantiere-chiaro-app/index.html
+        line: 1
+      - path: cantiere-chiaro-app/app.js
+        line: 1
+      - path: cantiere-chiaro-app/styles.css
+        line: 1
+    exported_signature:
+      - method: "Export diario JSON {exportedAt, note, entries}"
+        source_loc: cantiere-chiaro-app/app.js:388
+        stability: must_preserve
+    dynamic_entrypoints: []
+    depends_on:
+      - unit: manuali-legacy
+        via: Collegamento relativo ./manuali/ da index.html
+    shared_refs: []
+  - name: manuali-legacy
+    trigger: page
+    trigger_detail: GET /manuali/; ponte corrente e confronto della versione legacy
+    source_anchors:
+      - path: CantiereFacile/manuali/index.html
+        line: 1
+      - path: cantiere-chiaro-app/manuali/index.html
+        line: 1
+    exported_signature:
+      - method: Pagina ponte di consultazione manuali
+        source_loc: cantiere-chiaro-app/manuali/index.html:46
+        stability: must_preserve
+    dynamic_entrypoints: []
+    depends_on:
+      - unit: portale-documentale
+        via: URL documentali corretti in CantiereFacile; legacy main/manuali nella copia precedente
+    shared_refs: []

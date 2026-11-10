@@ -1,0 +1,19 @@
+unit: spazio-lavori
+commit: false
+candidate_splits:
+  - id: cantiere-chiaro-app/app.js:1
+    drivers: [data_ownership_split, change_cadence_split]
+    rationale: >-
+      I testi editoriali delle sei fasi sono mescolati alla logica UI;
+      una release canonica evita aggiornamenti manuali concorrenti.
+    source_slice:
+      file: cantiere-chiaro-app/app.js
+      lines: [1, 92]
+  - id: cantiere-chiaro-app/app.js:129
+    drivers: [concern_split, lifecycle_split]
+    rationale: >-
+      Persistenza, validazione e presentazione del diario condividono il file;
+      estrarle puo rendere verificabile la continuita dei dati locali.
+    source_slice:
+      file: cantiere-chiaro-app/app.js
+      lines: [129, 210]
